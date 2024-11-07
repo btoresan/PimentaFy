@@ -5,9 +5,9 @@ public class Main {
         ArrayList<Sound> music = new ArrayList<>();
         Sound sound = new Sound();
 
-        for(int i=0; i < 100; i++) {
-            sound.instrument = 2;
-            sound.pitch =  2*i;
+        for(int i=0; i < 50; i++) {
+            sound.instrument = 7;
+            sound.pitch =  2*i+7;
             sound.volume = 1000;
 
             music.add(sound);
@@ -15,7 +15,7 @@ public class Main {
             sound = new Sound();
         }
 
-        MusicPlayer player = new MusicPlayer(music, 180);
+        MusicPlayer player = new MusicPlayer(music, 120);
         player.play();
     }
 }
