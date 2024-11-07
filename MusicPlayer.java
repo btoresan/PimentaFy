@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class MusicPlayer {
     private Synthesizer synthesizer;
-    private int noteDuration = 60;
+    private int noteDuration;
     private ArrayList<Sound> music;
 
     public MusicPlayer(ArrayList<Sound> music, int userBPM){
@@ -33,7 +33,7 @@ public class MusicPlayer {
             synthesizer = MidiSystem.getSynthesizer();
             synthesizer.open(); // Open the synthesizer here to use later
         } catch (MidiUnavailableException e) {
-            e.printStackTrace();
+            System.out.println("An error occurred opening the synthesizer");
         }
     }
 
@@ -63,7 +63,7 @@ public class MusicPlayer {
             channel.noteOff(pitch);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("An error occurred trying to play a note");
         }
     }
 }
