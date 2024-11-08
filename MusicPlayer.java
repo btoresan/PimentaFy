@@ -6,13 +6,11 @@ import java.util.ArrayList;
 
 public class MusicPlayer {
     private Synthesizer synthesizer;
-    private int noteDuration;
     private ArrayList<Sound> music;
 
     //Constructor Class
-    public MusicPlayer(ArrayList<Sound> music, int userBPM){
+    public MusicPlayer(ArrayList<Sound> music){
         setMusic(music);
-        setBPM(userBPM);
     }
 
     //Iterate through the sounds in the music and plays them
@@ -23,8 +21,9 @@ public class MusicPlayer {
             int currentPitch = sound.pitch;
             int currentInstrument = sound.instrument;
             int currentVolume = sound.volume;
+            int currentDuration = sound.duration;
 
-            playNote(currentPitch, currentVolume, currentInstrument);
+            playNote(currentPitch, currentVolume, currentInstrument, currentDuration);
         }
 
         closeSynthesizer();
@@ -33,11 +32,6 @@ public class MusicPlayer {
     //Allows user to change the music without creating a new instance
     public void setMusic(ArrayList<Sound> userMusic) {
         music = userMusic;
-    }
-
-    //Allows user to change the BPM without creating a new instance
-    public void setBPM(int userBPM) {
-        noteDuration = 60000/(userBPM);
     }
 
     private void startSynthesizer() {
@@ -55,7 +49,7 @@ public class MusicPlayer {
         }
     }
 
-    private void playNote(int pitch, int volume, int instrument) {
+    private void playNote(int pitch, int volume, int instrument, int duration) {
         try {
             // Get a MIDI channel to play notes
             MidiChannel[] channels = synthesizer.getChannels();
@@ -63,7 +57,7 @@ public class MusicPlayer {
 
             // Play the note
             channel.noteOn(pitch, volume);
-            Thread.sleep(noteDuration);
+            Thread.sleep(duration);
             channel.noteOff(pitch);
 
         } catch (Exception e) {

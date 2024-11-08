@@ -9,13 +9,14 @@ public class Main {
             sound.instrument = 7;
             sound.pitch =  2*i+7;
             sound.volume = 1000;
+            sound.duration = 1000;
 
             music.add(sound);
 
             sound = new Sound();
         }
 
-        MusicPlayer player = new MusicPlayer(music, 120);
+        MusicPlayer player = new MusicPlayer(music);
         player.play();
     }
 }
