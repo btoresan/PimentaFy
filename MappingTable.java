@@ -30,13 +30,11 @@ public class MappingTable {
         String consonants = "BHJKLMNPQRSTVWXYZ" + "bhjklmnpqrstvwxyz";
         for (char letter : consonants.toCharArray()) {
             singleActions.put(String.valueOf(letter), "previous or silence");
-            // Perform actions with each letter here, like adding to a map
         }
 
         String evenDigits = "02468";
         for (char letter : evenDigits.toCharArray()) {
             singleActions.put(String.valueOf(letter), "instrument + "+letter);
-            // Perform actions with each letter here, like adding to a map
         }
 
         singleActions.put("?", "+ one octave");
@@ -52,6 +50,7 @@ public class MappingTable {
         List<String> output = new ArrayList<>();
         int i = 0;
 
+        //Iterate through the String
         while (i < input.length()) {
             boolean matched = false;
 
@@ -75,6 +74,7 @@ public class MappingTable {
         return output;
     }
 
+    //method to exemplify
     public static void main(String[] args) {
         String input = "BPM+AB-";
         List<String> notes = convertToActions(input);
