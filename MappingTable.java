@@ -27,7 +27,7 @@ public class MappingTable {
         singleActions.put("U", "Instrument 71");
         singleActions.put("u", "Instrument 71");
 
-        String consonants = "BHJKLMNPQRSTVWXYZ" + "bhjklmnpqrstvwxyz";
+        String consonants = "HJKLMNPQRSTVWXYZ" + "hjklmnpqrstvwxyz";
         for (char letter : consonants.toCharArray()) {
             singleActions.put(String.valueOf(letter), "previous or silence");
         }
