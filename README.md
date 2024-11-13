@@ -1,2 +1,2 @@
 # pepperFy
-Trabalho da cadeira Tecnicas de Construção de Programas com o prof. Pimenta.
+Trabalho da cadeira Técnicas De Construção De Programas, com o prof. Pimenta.
