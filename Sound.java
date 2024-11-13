@@ -1,6 +1,6 @@
 public class Sound {
-        int pitch;
-        int instrument;
-        int volume;
-        int duration;
+        public int pitch;
+        public int instrument;
+        public int volume;
+        public int duration;
 }
