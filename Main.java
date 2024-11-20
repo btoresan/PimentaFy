@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        //CurrentScreen.setCurrentScreen("menu");
         ArrayList<Sound> music = new ArrayList<>();
         Sound sound = new Sound();
 
