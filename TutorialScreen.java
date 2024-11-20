@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 
 public class TutorialScreen {
 
+    private static final String BACK_BUTTON_ICON_PATH = "C:\\Users\\gleal\\OneDrive\\Área de Trabalho\\PepperFy\\images\\back_icon.png";
+
     public TutorialScreen() {
         JFrame tutorialFrame = new JFrame();
         JLabel Logo = new JLabel();
@@ -27,7 +29,7 @@ public class TutorialScreen {
 
         // Style backButton
 
-        ImageIcon back_icon = new ImageIcon("C:/Users/gleal/IdeaProjects/interface_test/images/back_icon.png");
+        ImageIcon back_icon = new ImageIcon(BACK_BUTTON_ICON_PATH);
         JButton backButton = new JButton(back_icon);
         tutorialFrame.add(backButton);
         backButton.setBounds(25, 15, 30, 30);
