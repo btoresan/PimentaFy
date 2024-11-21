@@ -19,19 +19,21 @@ public class MenuScreen {
 
         // Window
         menuFrame.setVisible(true);											// leave the window visible
-        menuFrame.setSize(800,500);											// width x height
+        menuFrame.setSize(1600,1000);											// width x height
         menuFrame.setTitle("MENU");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				// stop running when pressed the close button
         menuFrame.setResizable(false);											// does not allow changing the window size
         menuFrame.setLocationRelativeTo(null);									// the window open in the middle of the screen
         menuFrame.setLayout(null);
+        menuFrame.getContentPane().setBackground(Color.WHITE);
+
 
 
         // Style covertButton
         menuFrame.add(convertButton);											// add the button in the window
         convertButton.setText("Convert");
-        convertButton.setBounds(265, 180, 250, 70);							// set the distance from x, y and the width, height
-        convertButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 30));	// set the font, the style font and the size of the text in the button
+        convertButton.setBounds(530, 360, 500, 140);							// set the distance from x, y and the width, height
+        convertButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 60));
         convertButton.setBackground(Color.WHITE);							// set the color of the button (red,blue,green)
         convertButton.setForeground(Color.BLACK);							// set the color of the font (red,blue,green)
 
@@ -52,8 +54,8 @@ public class MenuScreen {
         // Style tutorialButton
         menuFrame.add(tutorialButton);											// add the button in the window
         tutorialButton.setText("Tutorial");
-        tutorialButton.setBounds(265, 270, 250, 70);							// set the distance from x, y and the width, height
-        tutorialButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 30));	// set the font, the style font and the size of the text in the button
+        tutorialButton.setBounds(530, 540, 500, 140);							// set the distance from x, y and the width, height
+        tutorialButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 60));	// set the font, the style font and the size of the text in the button
         tutorialButton.setBackground(Color.WHITE);							// set the color of the button (red,blue,green)
         tutorialButton.setForeground(Color.BLACK);							// set the color of the font (red,blue,green)
 
@@ -73,8 +75,8 @@ public class MenuScreen {
         // Style exitButton
         menuFrame.add(exitButton);												// add the button in the window
         exitButton.setText("Exit");
-        exitButton.setBounds(265, 360, 250, 70);							// set the distance from x, y and the width, height
-        exitButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 30));		// set the font, the style font and the size of the text in the button
+        exitButton.setBounds(530, 720, 500, 140);							// set the distance from x, y and the width, height
+        exitButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 60));		// set the font, the style font and the size of the text in the button
         exitButton.setBackground(Color.WHITE);								// set the color of the button (red,blue,green)
         exitButton.setForeground(Color.BLACK);								// set the color of the font (red,blue,green)
 
@@ -97,8 +99,8 @@ public class MenuScreen {
         // Label
         menuFrame.add(Logo);
         Logo.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");
-        Logo.setFont(new Font("Arial", Font.BOLD, 60));
-        Logo.setBounds(235, 70, 350, 50);
+        Logo.setFont(new Font("Arial", Font.BOLD, 120));
+        Logo.setBounds(470, 140, 700, 100);
 
 
 

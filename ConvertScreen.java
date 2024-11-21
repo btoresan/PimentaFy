@@ -9,11 +9,11 @@ import javax.swing.border.Border;
 
 public class ConvertScreen {
 
-    private static final String BACK_BUTTON_ICON_PATH = "C:\\Users\\gleal\\OneDrive\\Área de Trabalho\\PepperFy\\images\\back_icon.png";
-    private static final String SAVE_BUTTON_ICON_PATH = "C:\\Users\\gleal\\OneDrive\\Área de Trabalho\\PepperFy\\images\\save_icon.png";
-    private static final String PASTE_BUTTON_ICON_PATH = "C:\\Users\\gleal\\OneDrive\\Área de Trabalho\\PepperFy\\images\\paste_icon.png";
-    private static final String IMPORT_BUTTON_ICON_PATH = "C:\\Users\\gleal\\OneDrive\\Área de Trabalho\\PepperFy\\images\\import_icon.png";
-
+    private static final String BACK_BUTTON_ICON_PATH = "images/back_icon.png";
+    private static final String SAVE_BUTTON_ICON_PATH = "images/save_icon.png";
+    private static final String PASTE_BUTTON_ICON_PATH = "images/paste_icon.png";
+    private static final String IMPORT_BUTTON_ICON_PATH = "images/import_icon.png";
+    private static final String CONVERT_TABLE_IMG_PATH = "images/conversion-table.png";
     public ConvertScreen() {
         JFrame convertFrame = new JFrame();
         JLabel Logo = new JLabel();
@@ -22,16 +22,18 @@ public class ConvertScreen {
 
         // Window
         convertFrame.setVisible(true);																// leave the window visible
-        convertFrame.setSize(800,500);																// width x height
+        convertFrame.setSize(1600,1000);																// width x height
         convertFrame.setTitle("CONVERT");
         convertFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);								// stop running when pressed the close button
         convertFrame.setResizable(false);															// does not allow changing the window size
         convertFrame.setLocationRelativeTo(null);													// the window open in the middle of the screen
         convertFrame.setLayout(null);
+        convertFrame.getContentPane().setBackground(Color.WHITE);
+
 
         // Configure a scroll for the textBox
         JScrollPane scrollPane = new JScrollPane(textBox);
-        scrollPane.setBounds(50, 100, 300, 320); 													// set position of scrollPane
+        scrollPane.setBounds(100, 200, 600, 640); 													// set position of scrollPane
         convertFrame.add(scrollPane);
 
 
@@ -46,7 +48,7 @@ public class ConvertScreen {
         ImageIcon back_icon = new ImageIcon(BACK_BUTTON_ICON_PATH);
         JButton backButton = new JButton(back_icon);
         convertFrame.add(backButton);
-        backButton.setBounds(25, 15, 30, 30);
+        backButton.setBounds(50, 30, 60, 60);
         backButton.setBackground(Color.WHITE);
         backButton.setBorderPainted(false);
         backButton.setToolTipText("Back");
@@ -67,7 +69,7 @@ public class ConvertScreen {
         ImageIcon save_icon = new ImageIcon(SAVE_BUTTON_ICON_PATH);
         JButton saveButton = new JButton(save_icon);
         convertFrame.add(saveButton);
-        saveButton.setBounds(65, 70, 25, 25);
+        saveButton.setBounds(130, 140, 50, 50);
         saveButton.setBackground(Color.WHITE);
         saveButton.setBorderPainted(false);
         saveButton.setToolTipText("Save");
@@ -117,7 +119,7 @@ public class ConvertScreen {
         ImageIcon paste_icon = new ImageIcon(PASTE_BUTTON_ICON_PATH);
         JButton pasteButton = new JButton(paste_icon);
         convertFrame.add(pasteButton);
-        pasteButton.setBounds(100, 68, 30, 30);
+        pasteButton.setBounds(200, 136, 60, 60);
         pasteButton.setBackground(Color.WHITE);
         pasteButton.setBorderPainted(false);
         pasteButton.setToolTipText("Paste");
@@ -151,7 +153,7 @@ public class ConvertScreen {
         ImageIcon import_icon = new ImageIcon(IMPORT_BUTTON_ICON_PATH);
         JButton importButton = new JButton(import_icon);
         convertFrame.add(importButton);
-        importButton.setBounds(140, 68, 22, 28);
+        importButton.setBounds(280, 136, 44, 56);
         importButton.setBackground(Color.WHITE);
         importButton.setBorderPainted(false);
         importButton.setToolTipText("Import");
@@ -193,12 +195,17 @@ public class ConvertScreen {
             }
         });
 
+        // Conversion table
+        ImageIcon tableIcon = new ImageIcon(CONVERT_TABLE_IMG_PATH);
+        JLabel tableLabel = new JLabel(tableIcon);
+        tableLabel.setBounds(900, 200, tableIcon.getIconWidth(), tableIcon.getIconHeight());
+        convertFrame.add(tableLabel);
 
         // Label
         convertFrame.add(Logo);
         Logo.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");									// Change text color to red
-        Logo.setFont(new Font("Arial", Font.BOLD, 25));
-        Logo.setBounds(310, 10, 350, 50);
+        Logo.setFont(new Font("Arial", Font.BOLD, 50));
+        Logo.setBounds(620, 20, 700, 100);
 
 
     }
