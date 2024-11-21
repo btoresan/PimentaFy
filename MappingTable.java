@@ -16,34 +16,36 @@ public class MappingTable {
         singleActions.put("F", "fa");
         singleActions.put("G", "sol");
 
-        for (char letter = 'a'; letter <= 'g'; letter++) {
-            singleActions.put(String.valueOf(letter), "previous or silence");
-        }
-        singleActions.put("!", "Instrument 14");
-        singleActions.put("I", "Instrument 71");
-        singleActions.put("i", "Instrument 71");
-        singleActions.put("O", "Instrument 71");
-        singleActions.put("o", "Instrument 71");
-        singleActions.put("U", "Instrument 71");
-        singleActions.put("u", "Instrument 71");
+        singleActions.put("a", "la");
+        singleActions.put("b", "si");
+        singleActions.put("c", "do");
+        singleActions.put("d", "re");
+        singleActions.put("e", "mi");
+        singleActions.put("f", "fa");
+        singleActions.put("g", "sol");
 
-        String consonants = "HJKLMNPQRSTVWXYZ" + "hjklmnpqrstvwxyz";
-        for (char letter : consonants.toCharArray()) {
-            singleActions.put(String.valueOf(letter), "previous or silence");
-        }
+        singleActions.put(" ", "silence");
 
-        String evenDigits = "02468";
-        for (char letter : evenDigits.toCharArray()) {
-            singleActions.put(String.valueOf(letter), "instrument + "+letter);
-        }
+        singleActions.put("+", "double volume");
+        singleActions.put("-", "default volume");
 
-        singleActions.put("?", "+ one octave");
-        singleActions.put("\n", "Instrument 15");
-        singleActions.put(";", "Instrument 126");
-        singleActions.put(",", "Instrument 105");
+        singleActions.put("I", "repeat or phone");
+        singleActions.put("i", "repeat or phone");
+        singleActions.put("O", "repeat or phone");
+        singleActions.put("o", "repeat or phone");
+        singleActions.put("U", "repeat or phone");
+        singleActions.put("u", "repeat or phone");
+
+        singleActions.put("?", "random note");
+        singleActions.put("\n", "plus one instrument");
+        singleActions.put(";", "random instrument");
 
         // Define multi-character overrides
         multiActions.put("BPM+", "faster notes");
+        multiActions.put("R+", "plus one octave");
+        multiActions.put("R-", "minus one octave");
+
+        //else is covered in the method
     }
 
     public static List<String> convertToActions(String input) {
@@ -67,7 +69,7 @@ public class MappingTable {
             // If no multi-character match, check single-character actions
             if (!matched) {
                 String charStr = Character.toString(input.charAt(i));
-                output.add(singleActions.getOrDefault(charStr, "previous or silence"));
+                output.add(singleActions.getOrDefault(charStr, "nop"));
                 i++;
             }
         }
