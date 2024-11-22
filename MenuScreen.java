@@ -1,42 +1,51 @@
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.Color;
 
 public class MenuScreen {
+
+    private static final int WINDOW_WIDTH = 1024;
+    private static final int WINDOW_HEIGHT = 768;
+    private static final String PEPPERFY_ICON_PATH = "images/pepperfy_icon.png";
 
     public MenuScreen() {
         JFrame menuFrame = new JFrame();
         JButton convertButton = new JButton();
         JButton tutorialButton = new JButton();
         JButton exitButton = new JButton();
-
-        JLabel Logo = new JLabel();
+        JLabel Title = new JLabel();
 
         // Window
-        menuFrame.setVisible(true);											// leave the window visible
-        menuFrame.setSize(1600,1000);											// width x height
+        menuFrame.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         menuFrame.setTitle("MENU");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				// stop running when pressed the close button
-        menuFrame.setResizable(false);											// does not allow changing the window size
-        menuFrame.setLocationRelativeTo(null);									// the window open in the middle of the screen
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuFrame.setResizable(false);
+        menuFrame.setLocationRelativeTo(null);
         menuFrame.setLayout(null);
         menuFrame.getContentPane().setBackground(Color.WHITE);
 
+        // Label
+        Title.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");
+        Title.setFont(new Font("Arial", Font.BOLD, 80));
+        Title.setBounds(270, 130, 470, 65);
+        menuFrame.add(Title);
+
+        // Pepper.Fy icon
+        ImageIcon pepperfyIcon = new ImageIcon(PEPPERFY_ICON_PATH);
+        JLabel pepperfyLabel = new JLabel(pepperfyIcon);
+        pepperfyLabel.setBounds(735, 60, 60, 220);
+        menuFrame.add(pepperfyLabel);
 
 
         // Style covertButton
-        menuFrame.add(convertButton);											// add the button in the window
         convertButton.setText("Convert");
-        convertButton.setBounds(530, 360, 500, 140);							// set the distance from x, y and the width, height
-        convertButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 60));
-        convertButton.setBackground(Color.WHITE);							// set the color of the button (red,blue,green)
-        convertButton.setForeground(Color.BLACK);							// set the color of the font (red,blue,green)
-
+        convertButton.setBounds(355, 280, 300, 60);
+        convertButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 50));
+        convertButton.setBackground(Color.WHITE);
+        convertButton.setForeground(Color.BLACK);
+        menuFrame.add(convertButton);
 
         // Action convertButton
         convertButton.addActionListener(new ActionListener() {
@@ -44,20 +53,20 @@ public class MenuScreen {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                menuFrame.dispose();										// close menu
-                CurrentScreen.setCurrentScreen("convert");						// open convert screen
+                menuFrame.dispose();
+                CurrentScreen.setCurrentScreen("convert");
             }
         });
 
 
 
         // Style tutorialButton
-        menuFrame.add(tutorialButton);											// add the button in the window
         tutorialButton.setText("Tutorial");
-        tutorialButton.setBounds(530, 540, 500, 140);							// set the distance from x, y and the width, height
-        tutorialButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 60));	// set the font, the style font and the size of the text in the button
-        tutorialButton.setBackground(Color.WHITE);							// set the color of the button (red,blue,green)
-        tutorialButton.setForeground(Color.BLACK);							// set the color of the font (red,blue,green)
+        tutorialButton.setBounds(355, 380, 300, 60);
+        tutorialButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 50));
+        tutorialButton.setBackground(Color.WHITE);
+        tutorialButton.setForeground(Color.BLACK);
+        menuFrame.add(tutorialButton);
 
         // Action tutorialButton
         tutorialButton.addActionListener(new ActionListener() {
@@ -65,20 +74,19 @@ public class MenuScreen {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                menuFrame.dispose();										// close menu
-                CurrentScreen.setCurrentScreen("tutorial");						// open options screen
+                menuFrame.dispose();
+                CurrentScreen.setCurrentScreen("tutorial");
             }
         });
 
 
-
         // Style exitButton
-        menuFrame.add(exitButton);												// add the button in the window
+        menuFrame.add(exitButton);
         exitButton.setText("Exit");
-        exitButton.setBounds(530, 720, 500, 140);							// set the distance from x, y and the width, height
-        exitButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 60));		// set the font, the style font and the size of the text in the button
-        exitButton.setBackground(Color.WHITE);								// set the color of the button (red,blue,green)
-        exitButton.setForeground(Color.BLACK);								// set the color of the font (red,blue,green)
+        exitButton.setBounds(355, 480, 300, 60);
+        exitButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 50));
+        exitButton.setBackground(Color.WHITE);
+        exitButton.setForeground(Color.BLACK);
 
         // Action exitButton Button
         exitButton.addActionListener(new ActionListener() {
@@ -95,15 +103,7 @@ public class MenuScreen {
 
         });
 
-
-        // Label
-        menuFrame.add(Logo);
-        Logo.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");
-        Logo.setFont(new Font("Arial", Font.BOLD, 120));
-        Logo.setBounds(470, 140, 700, 100);
-
-
-
+        menuFrame.setVisible(true);
 
     }
 

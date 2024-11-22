@@ -9,31 +9,45 @@ import javax.swing.border.Border;
 
 public class ConvertScreen {
 
+    private static final int WINDOW_WIDTH = 1024;
+    private static final int WINDOW_HEIGHT = 768;
+    private static final String SMALL_PEPPERFY_ICON_PATH = "images/small_pepperfy_icon.png";
     private static final String BACK_BUTTON_ICON_PATH = "images/back_icon.png";
     private static final String SAVE_BUTTON_ICON_PATH = "images/save_icon.png";
     private static final String PASTE_BUTTON_ICON_PATH = "images/paste_icon.png";
     private static final String IMPORT_BUTTON_ICON_PATH = "images/import_icon.png";
     private static final String CONVERT_TABLE_IMG_PATH = "images/conversion-table.png";
+
     public ConvertScreen() {
         JFrame convertFrame = new JFrame();
-        JLabel Logo = new JLabel();
+        JLabel Title = new JLabel();
         JTextArea textBox = new JTextArea(2,20);
 
-
         // Window
-        convertFrame.setVisible(true);																// leave the window visible
-        convertFrame.setSize(1600,1000);																// width x height
+        convertFrame.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         convertFrame.setTitle("CONVERT");
-        convertFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);								// stop running when pressed the close button
-        convertFrame.setResizable(false);															// does not allow changing the window size
-        convertFrame.setLocationRelativeTo(null);													// the window open in the middle of the screen
+        convertFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        convertFrame.setResizable(false);
+        convertFrame.setLocationRelativeTo(null);
         convertFrame.setLayout(null);
         convertFrame.getContentPane().setBackground(Color.WHITE);
 
 
+        // Label
+        convertFrame.add(Title);
+        Title.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");									// Change text color to red
+        Title.setFont(new Font("Arial", Font.BOLD, 35));
+        Title.setBounds(400, 10, 300, 60);
+
+        // Pepper.Fy icon
+        ImageIcon pepperfyIcon = new ImageIcon(SMALL_PEPPERFY_ICON_PATH);
+        JLabel pepperfyLabel = new JLabel(pepperfyIcon);
+        pepperfyLabel.setBounds(595, 10, 30, 60);
+        convertFrame.add(pepperfyLabel);
+
         // Configure a scroll for the textBox
         JScrollPane scrollPane = new JScrollPane(textBox);
-        scrollPane.setBounds(100, 200, 600, 640); 													// set position of scrollPane
+        scrollPane.setBounds(50, 130, 450, 490);
         convertFrame.add(scrollPane);
 
 
@@ -48,7 +62,7 @@ public class ConvertScreen {
         ImageIcon back_icon = new ImageIcon(BACK_BUTTON_ICON_PATH);
         JButton backButton = new JButton(back_icon);
         convertFrame.add(backButton);
-        backButton.setBounds(50, 30, 60, 60);
+        backButton.setBounds(40, 15, 50, 50);
         backButton.setBackground(Color.WHITE);
         backButton.setBorderPainted(false);
         backButton.setToolTipText("Back");
@@ -59,7 +73,7 @@ public class ConvertScreen {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                convertFrame.dispose();										// close convert window
+                convertFrame.dispose();										// close options window
                 CurrentScreen.setCurrentScreen("menu");						// open menu screen
             }
         });
@@ -68,11 +82,11 @@ public class ConvertScreen {
         // Style saveButton
         ImageIcon save_icon = new ImageIcon(SAVE_BUTTON_ICON_PATH);
         JButton saveButton = new JButton(save_icon);
-        convertFrame.add(saveButton);
-        saveButton.setBounds(130, 140, 50, 50);
+        saveButton.setBounds(70, 90, 40, 40);
         saveButton.setBackground(Color.WHITE);
         saveButton.setBorderPainted(false);
         saveButton.setToolTipText("Save");
+        convertFrame.add(saveButton);
 
         // Action saveButton
         saveButton.addActionListener(new ActionListener() {
@@ -113,16 +127,14 @@ public class ConvertScreen {
             }
         });
 
-
-
         // Style pasteButton
         ImageIcon paste_icon = new ImageIcon(PASTE_BUTTON_ICON_PATH);
         JButton pasteButton = new JButton(paste_icon);
-        convertFrame.add(pasteButton);
-        pasteButton.setBounds(200, 136, 60, 60);
+        pasteButton.setBounds(115, 90, 40, 40);
         pasteButton.setBackground(Color.WHITE);
         pasteButton.setBorderPainted(false);
         pasteButton.setToolTipText("Paste");
+        convertFrame.add(pasteButton);
 
         // Action pasteButton
         pasteButton.addActionListener(new ActionListener() {
@@ -152,11 +164,11 @@ public class ConvertScreen {
         // Style importButton
         ImageIcon import_icon = new ImageIcon(IMPORT_BUTTON_ICON_PATH);
         JButton importButton = new JButton(import_icon);
-        convertFrame.add(importButton);
-        importButton.setBounds(280, 136, 44, 56);
+        importButton.setBounds(160, 90, 40, 40);
         importButton.setBackground(Color.WHITE);
         importButton.setBorderPainted(false);
         importButton.setToolTipText("Import");
+        convertFrame.add(importButton);
 
         // Action importButton
         importButton.addActionListener(new ActionListener() {
@@ -198,15 +210,10 @@ public class ConvertScreen {
         // Conversion table
         ImageIcon tableIcon = new ImageIcon(CONVERT_TABLE_IMG_PATH);
         JLabel tableLabel = new JLabel(tableIcon);
-        tableLabel.setBounds(900, 200, tableIcon.getIconWidth(), tableIcon.getIconHeight());
+        tableLabel.setBounds(520, 130, tableIcon.getIconWidth(), tableIcon.getIconHeight());
         convertFrame.add(tableLabel);
 
-        // Label
-        convertFrame.add(Logo);
-        Logo.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");									// Change text color to red
-        Logo.setFont(new Font("Arial", Font.BOLD, 50));
-        Logo.setBounds(620, 20, 700, 100);
-
+        convertFrame.setVisible(true);
 
     }
 }
