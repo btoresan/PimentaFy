@@ -38,7 +38,7 @@ public class TutorialScreen {
         // Pepper.Fy icon
         ImageIcon pepperfyIcon = new ImageIcon(SMALL_PEPPERFY_ICON_PATH);
         JLabel pepperfyLabel = new JLabel(pepperfyIcon);
-        pepperfyLabel.setBounds(595, 10, 30, 60);
+        pepperfyLabel.setBounds(580, 10, pepperfyIcon.getIconWidth(), pepperfyIcon.getIconHeight());
         tutorialFrame.add(pepperfyLabel);
 
 
@@ -46,7 +46,7 @@ public class TutorialScreen {
         ImageIcon back_icon = new ImageIcon(BACK_BUTTON_ICON_PATH);
         JButton backButton = new JButton(back_icon);
         tutorialFrame.add(backButton);
-        backButton.setBounds(40, 15, 50, 50);
+        backButton.setBounds(40, 15, back_icon.getIconWidth(), back_icon.getIconHeight());
         backButton.setBackground(Color.WHITE);
         backButton.setBorderPainted(false);
         backButton.setToolTipText("Back");

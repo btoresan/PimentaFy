@@ -35,7 +35,7 @@ public class MenuScreen {
         // Pepper.Fy icon
         ImageIcon pepperfyIcon = new ImageIcon(PEPPERFY_ICON_PATH);
         JLabel pepperfyLabel = new JLabel(pepperfyIcon);
-        pepperfyLabel.setBounds(735, 60, 60, 220);
+        pepperfyLabel.setBounds(655, 60, pepperfyIcon.getIconWidth(), pepperfyIcon.getIconHeight());
         menuFrame.add(pepperfyLabel);
 
 

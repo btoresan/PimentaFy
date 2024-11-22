@@ -42,7 +42,7 @@ public class ConvertScreen {
         // Pepper.Fy icon
         ImageIcon pepperfyIcon = new ImageIcon(SMALL_PEPPERFY_ICON_PATH);
         JLabel pepperfyLabel = new JLabel(pepperfyIcon);
-        pepperfyLabel.setBounds(595, 10, 30, 60);
+        pepperfyLabel.setBounds(580, 10, pepperfyIcon.getIconWidth(), pepperfyIcon.getIconHeight());
         convertFrame.add(pepperfyLabel);
 
         // Configure a scroll for the textBox
@@ -62,7 +62,7 @@ public class ConvertScreen {
         ImageIcon back_icon = new ImageIcon(BACK_BUTTON_ICON_PATH);
         JButton backButton = new JButton(back_icon);
         convertFrame.add(backButton);
-        backButton.setBounds(40, 15, 50, 50);
+        backButton.setBounds(40, 15, back_icon.getIconWidth(), back_icon.getIconHeight());
         backButton.setBackground(Color.WHITE);
         backButton.setBorderPainted(false);
         backButton.setToolTipText("Back");
@@ -82,7 +82,7 @@ public class ConvertScreen {
         // Style saveButton
         ImageIcon save_icon = new ImageIcon(SAVE_BUTTON_ICON_PATH);
         JButton saveButton = new JButton(save_icon);
-        saveButton.setBounds(70, 90, 40, 40);
+        saveButton.setBounds(70, 93, save_icon.getIconWidth(), save_icon.getIconHeight());
         saveButton.setBackground(Color.WHITE);
         saveButton.setBorderPainted(false);
         saveButton.setToolTipText("Save");
@@ -130,7 +130,7 @@ public class ConvertScreen {
         // Style pasteButton
         ImageIcon paste_icon = new ImageIcon(PASTE_BUTTON_ICON_PATH);
         JButton pasteButton = new JButton(paste_icon);
-        pasteButton.setBounds(115, 90, 40, 40);
+        pasteButton.setBounds(115, 93, paste_icon.getIconWidth(), paste_icon.getIconHeight());
         pasteButton.setBackground(Color.WHITE);
         pasteButton.setBorderPainted(false);
         pasteButton.setToolTipText("Paste");
@@ -164,7 +164,7 @@ public class ConvertScreen {
         // Style importButton
         ImageIcon import_icon = new ImageIcon(IMPORT_BUTTON_ICON_PATH);
         JButton importButton = new JButton(import_icon);
-        importButton.setBounds(160, 90, 40, 40);
+        importButton.setBounds(160, 93, import_icon.getIconWidth(), import_icon.getIconHeight());
         importButton.setBackground(Color.WHITE);
         importButton.setBorderPainted(false);
         importButton.setToolTipText("Import");
