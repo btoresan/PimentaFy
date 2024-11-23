@@ -1,5 +1,4 @@
 public class CurrentScreen {
-
     private static final String MENU = "menu";
     private static final String CONVERT = "convert";
     private static final String TUTORIAL = "tutorial";

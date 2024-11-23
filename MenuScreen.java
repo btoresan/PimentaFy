@@ -45,6 +45,7 @@ public class MenuScreen {
         convertButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 50));
         convertButton.setBackground(Color.WHITE);
         convertButton.setForeground(Color.BLACK);
+        convertButton.setFocusPainted(false);
         menuFrame.add(convertButton);
 
         // Action convertButton

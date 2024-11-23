@@ -16,12 +16,11 @@ public class ConvertScreen {
     private static final String SAVE_BUTTON_ICON_PATH = "images/save_icon.png";
     private static final String PASTE_BUTTON_ICON_PATH = "images/paste_icon.png";
     private static final String IMPORT_BUTTON_ICON_PATH = "images/import_icon.png";
+    private static final String PLAY_BUTTON_ICON_PATH = "images/play_icon.png";
     private static final String CONVERT_TABLE_IMG_PATH = "images/conversion-table.png";
 
     public ConvertScreen() {
         JFrame convertFrame = new JFrame();
-        JLabel Title = new JLabel();
-        JTextArea textBox = new JTextArea(2,20);
 
         // Window
         convertFrame.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
@@ -33,11 +32,38 @@ public class ConvertScreen {
         convertFrame.getContentPane().setBackground(Color.WHITE);
 
 
-        // Label
-        convertFrame.add(Title);
+        // Title label
+        JLabel Title = new JLabel();
         Title.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");									// Change text color to red
         Title.setFont(new Font("Arial", Font.BOLD, 35));
         Title.setBounds(400, 10, 300, 60);
+        convertFrame.add(Title);
+
+        // BPM label
+        JLabel BPMLabel = new JLabel();
+        BPMLabel.setText("BPM:");
+        BPMLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        BPMLabel.setBounds(680, 560, 100, 30);
+        convertFrame.add(BPMLabel);
+
+        // inputBPM
+        SpinnerNumberModel spinModelBPM = new SpinnerNumberModel(10, 10, 250, 1);
+        JSpinner inputBPM = new JSpinner(spinModelBPM);
+        inputBPM.setBounds(680, 590, 50, 30);
+        convertFrame.add(inputBPM);
+
+        // Current octave label
+        JLabel currentOctaveLabel = new JLabel();
+        currentOctaveLabel.setText("Current Octave:");
+        currentOctaveLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        currentOctaveLabel.setBounds(780, 560, 140, 30);
+        convertFrame.add(currentOctaveLabel);
+
+        // inputOctave
+        SpinnerNumberModel spinModelOctave = new SpinnerNumberModel(0, 0, 100, 1);
+        JSpinner inputOctave = new JSpinner(spinModelOctave);
+        inputOctave.setBounds(780, 590, 50, 30);
+        convertFrame.add(inputOctave);
 
         // Pepper.Fy icon
         ImageIcon pepperfyIcon = new ImageIcon(SMALL_PEPPERFY_ICON_PATH);
@@ -46,10 +72,10 @@ public class ConvertScreen {
         convertFrame.add(pepperfyLabel);
 
         // Configure a scroll for the textBox
+        JTextArea textBox = new JTextArea(2,20);
         JScrollPane scrollPane = new JScrollPane(textBox);
-        scrollPane.setBounds(50, 130, 450, 490);
+        scrollPane.setBounds(50, 130, 450, 570);
         convertFrame.add(scrollPane);
-
 
         // Text box
         Border border = BorderFactory.createLineBorder(Color.BLACK);								// creates a border for the textBox
@@ -66,6 +92,7 @@ public class ConvertScreen {
         backButton.setBackground(Color.WHITE);
         backButton.setBorderPainted(false);
         backButton.setToolTipText("Back");
+        backButton.setFocusPainted(false);
 
         // Action backButton
         backButton.addActionListener(new ActionListener() {
@@ -159,8 +186,6 @@ public class ConvertScreen {
             }
         });
 
-
-
         // Style importButton
         ImageIcon import_icon = new ImageIcon(IMPORT_BUTTON_ICON_PATH);
         JButton importButton = new JButton(import_icon);
@@ -207,6 +232,23 @@ public class ConvertScreen {
             }
         });
 
+        // Style playButton
+        ImageIcon play_icon = new ImageIcon(PLAY_BUTTON_ICON_PATH);
+        JButton playButton = new JButton(play_icon);
+        playButton.setBounds(520, 560, play_icon.getIconWidth(), play_icon.getIconHeight());
+        playButton.setBackground(Color.WHITE);
+        playButton.setBorderPainted(false);
+        playButton.setToolTipText("Play");
+        convertFrame.add(playButton);
+
+        // Action playButton
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TextSheet currentText= new TextSheet(textBox.getText(),0);
+            }
+        });
+
         // Conversion table
         ImageIcon tableIcon = new ImageIcon(CONVERT_TABLE_IMG_PATH);
         JLabel tableLabel = new JLabel(tableIcon);
@@ -214,6 +256,5 @@ public class ConvertScreen {
         convertFrame.add(tableLabel);
 
         convertFrame.setVisible(true);
-
     }
 }
