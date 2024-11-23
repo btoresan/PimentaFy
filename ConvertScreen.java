@@ -6,6 +6,8 @@ import java.io.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class ConvertScreen {
 
@@ -43,27 +45,43 @@ public class ConvertScreen {
         JLabel BPMLabel = new JLabel();
         BPMLabel.setText("BPM:");
         BPMLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        BPMLabel.setBounds(680, 560, 100, 30);
+        BPMLabel.setBounds(680, 575, 100, 30);
         convertFrame.add(BPMLabel);
 
         // inputBPM
-        SpinnerNumberModel spinModelBPM = new SpinnerNumberModel(10, 10, 250, 1);
+        SpinnerNumberModel spinModelBPM = new SpinnerNumberModel(30, 30, 180, 1);
         JSpinner inputBPM = new JSpinner(spinModelBPM);
-        inputBPM.setBounds(680, 590, 50, 30);
+        inputBPM.setBounds(730, 575, 50, 30);
         convertFrame.add(inputBPM);
 
         // Current octave label
         JLabel currentOctaveLabel = new JLabel();
         currentOctaveLabel.setText("Current Octave:");
         currentOctaveLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        currentOctaveLabel.setBounds(780, 560, 140, 30);
+        currentOctaveLabel.setBounds(810, 575, 140, 30);
         convertFrame.add(currentOctaveLabel);
 
         // inputOctave
-        SpinnerNumberModel spinModelOctave = new SpinnerNumberModel(0, 0, 100, 1);
+        SpinnerNumberModel spinModelOctave = new SpinnerNumberModel(1, 1, 8, 1);
         JSpinner inputOctave = new JSpinner(spinModelOctave);
-        inputOctave.setBounds(780, 590, 50, 30);
+        inputOctave.setBounds(935, 575, 50, 30);
         convertFrame.add(inputOctave);
+
+        // Volume label
+        JLabel volumeLabel = new JLabel();
+        volumeLabel.setText("Volume:");
+        volumeLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        volumeLabel.setBounds(680, 635, 140, 30);
+        convertFrame.add(volumeLabel);
+
+        // Volume slider
+        JSlider sliderVolume = new JSlider(0, 100, 50);
+        sliderVolume.setBounds(750, 630, 200, 50);
+        sliderVolume.setMajorTickSpacing(20);
+        sliderVolume.setMinorTickSpacing(5);
+        sliderVolume.setPaintTicks(true);
+        sliderVolume.setPaintLabels(true);
+        convertFrame.add(sliderVolume);
 
         // Pepper.Fy icon
         ImageIcon pepperfyIcon = new ImageIcon(SMALL_PEPPERFY_ICON_PATH);
