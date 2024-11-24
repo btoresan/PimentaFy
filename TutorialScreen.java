@@ -14,6 +14,7 @@ public class TutorialScreen {
     private static final int WINDOW_HEIGHT = 768;
     private static final String SMALL_PEPPERFY_ICON_PATH = "images/small_pepperfy_icon.png";
     private static final String BACK_BUTTON_ICON_PATH = "images/back_icon.png";
+    private static final String TUTORIAL_SCREEN_IMG_PATH = "images/tutorial-screen.png";
 
     public TutorialScreen() {
         JFrame tutorialFrame = new JFrame();
@@ -61,6 +62,12 @@ public class TutorialScreen {
                 CurrentScreen.setCurrentScreen("menu");						// open menu screen
             }
         });
+
+        // Tutorial screen image
+        ImageIcon tutorialIcon = new ImageIcon(TUTORIAL_SCREEN_IMG_PATH);
+        JLabel tutorialLabel = new JLabel(tutorialIcon);
+        tutorialLabel.setBounds(50, 75, tutorialIcon.getIconWidth(), tutorialIcon.getIconHeight());
+        tutorialFrame.add(tutorialLabel);
 
         tutorialFrame.setVisible(true);
     }
