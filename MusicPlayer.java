@@ -18,10 +18,10 @@ public class MusicPlayer {
         startSynthesizer();
 
         for (Sound sound : music) {
-            int currentPitch = sound.pitch;
-            int currentInstrument = sound.instrument;
-            int currentVolume = sound.volume;
-            int currentDuration = sound.duration;
+            int currentPitch = sound.getPitch();
+            int currentInstrument = sound.getInstrument();
+            int currentVolume = sound.getVolume();
+            int currentDuration = sound.getDuration();
 
             playNote(currentPitch, currentVolume, currentInstrument, currentDuration);
         }

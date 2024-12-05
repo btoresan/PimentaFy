@@ -14,14 +14,14 @@ public class MidiFileCreator {
         // Process each sound
         for (Sound sound : sounds) {
             // Set instrument for the sound
-            track.add(createProgramChangeEvent(sound.instrument, currentTick));
+            track.add(createProgramChangeEvent(sound.getInstrument(), currentTick));
 
             // Add the note on and note off events
-            track.add(createNoteEvent(ShortMessage.NOTE_ON, sound.pitch, sound.volume, currentTick));
-            track.add(createNoteEvent(ShortMessage.NOTE_OFF, sound.pitch, sound.volume, currentTick + sound.duration));
+            track.add(createNoteEvent(ShortMessage.NOTE_ON, sound.getPitch(), sound.getVolume(), currentTick));
+            track.add(createNoteEvent(ShortMessage.NOTE_OFF, sound.getPitch(), sound.getVolume(), currentTick + sound.getDuration()));
 
             // Update the current tick for the next note
-            currentTick += sound.duration;
+            currentTick += sound.getDuration();
         }
 
         // Write the MIDI sequence to a file
@@ -46,9 +46,9 @@ public class MidiFileCreator {
         try {
             // Create an ArrayList of sounds
             ArrayList<Sound> sounds = new ArrayList<>();
-            sounds.add(new Sound(60, 0, 100, 480)); // Middle C, Piano, Velocity 100, Duration 1 quarter note
-            sounds.add(new Sound(62, 10, 100, 480)); // D note, Music Box
-            sounds.add(new Sound(64, 40, 100, 480)); // E note, Synth Lead
+            //sounds.add(new Sound(55, 1, 100, 127, 60)); // Middle C, Piano, Velocity 100, Duration 1 quarter note
+            //sounds.add(new Sound(32.703F, 4, 100, 1, 60)); // D note, Music Box
+            //sounds.add(new Sound(43.654F, 8, 100, 1, 60)); // E note, Synth Lead
 
             saveAsMidiFile(sounds, "output_sequential.mid");
         } catch (Exception e) {
