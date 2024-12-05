@@ -4,11 +4,11 @@ public class Sound {
         private final int instrument;
         private final int volume;
 
-        public Sound(float frequency, int octave, int instrument, int volume, int bpm) {
+        public Sound(int offset, int octave, int instrument, int volume, int bpm) {
                 this.volume = volume;
                 this.instrument = instrument;
                 this.duration = makeDuration(bpm);
-                this.pitch = makePitch(frequency, octave);
+                this.pitch = makePitch(offset, octave);
         }
 
         private int makeDuration(int bpm) {
@@ -17,8 +17,8 @@ public class Sound {
                 return Math.round(MILLISECONDS_PER_MINUTE / bpm);
         }
 
-        private int makePitch(float frequency, int octave) {
-                return Math.round(frequency * (float) Math.pow(2, octave-1));
+        private int makePitch(int offset, int octave) {
+                return 12 * (octave + 1) + offset;
         }
 
         public int getPitch() {
