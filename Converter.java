@@ -1,17 +1,19 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Converter {
-    public int defaultOctave;
-    public int defaultVolume;
-    public int defaultInstrument;
-    public int defaultBPM;
+    public static int defaultOctave;
+    public static int defaultVolume;
+    public static int defaultInstrument;
+    public static int defaultBPM;
 
-    private int currentFrequencyIndex;
-    private int currentOctave;
-    private int currentVolume;
-    private int currentInstrument;
-    private int currentBPM;
+    private static int currentFrequencyIndex;
+    private static int currentOctave;
+    private static int currentVolume;
+    private static int currentInstrument;
+    private static int currentBPM;
 
     private static final int A_FREQUENCY = 0;
     private static final int B_FREQUENCY = 1;
@@ -23,14 +25,14 @@ public class Converter {
 
     private static final float frequencies[] = {55, 61.735F, 32.703F, 36.708F, 41.203F, 43.654F, 48.999F};
 
-    public void setDefaultConfig(int octave, int volume, int instrument, int bpm) {
+    public static void setDefaultConfig(int octave, int volume, int instrument, int bpm) {
         defaultOctave = octave;
         defaultVolume = volume;
         defaultInstrument = instrument;
         defaultBPM = bpm;
     }
 
-    private void saveLastSound(int frequencyIndex, int octave, int instrument, int volume, int BPM) {
+    private static void saveLastSound(int frequencyIndex, int octave, int instrument, int volume, int BPM) {
         currentFrequencyIndex = frequencyIndex;
         currentOctave = octave;
         currentInstrument = instrument;
@@ -38,7 +40,7 @@ public class Converter {
         currentBPM = BPM;
     }
 
-    private Sound getNextSound(int frequencyIndex, int octave, int instrument, int volume, int bpm) {
+    private static Sound getNextSound(int frequencyIndex, int octave, int instrument, int volume, int bpm) {
         float frequency = frequencies[frequencyIndex];
 
         Sound nextSound = new Sound(frequency, octave, instrument, volume, bpm);
@@ -47,16 +49,23 @@ public class Converter {
         return nextSound;
     }
 
-    private int getRandomBPM(Random randomValue) {
+    private static int getRandomBPM(Random randomValue) {
         return randomValue.nextInt(30, 180);
     }
 
-    public ArrayList<Sound> convertToSounds(ArrayList<String> actionsList) {
+    private static Boolean isNoteAction(String action) {
+        if (Objects.equals(action, "la") || Objects.equals(action, "si") || Objects.equals(action, "do") || Objects.equals(action, "re") || Objects.equals(action, "mi") || Objects.equals(action, "fa") || Objects.equals(action, "sol"))
+            return true;
+
+        return false;
+    }
+
+    public static ArrayList<Sound> convertToSounds(List<String> actionsList) {
         ArrayList<Sound> sounds = new ArrayList<>();
         Random randomValue = new Random();
 
-        for (String action : actionsList) {
-            switch (action) {
+        for (int i=0; i<actionsList.size(); i++) {
+            switch (actionsList.get(i)) {
                 case "la":
                     sounds.add(getNextSound(A_FREQUENCY, currentOctave, currentInstrument, currentVolume, currentBPM));
                     break;
@@ -87,8 +96,11 @@ public class Converter {
                 case "default volume":
                     sounds.add(getNextSound(currentFrequencyIndex, currentOctave, currentInstrument, defaultVolume, currentBPM));
                     break;
-                case "phone":
-
+                case "repeat or phone":
+                    if (isNoteAction(actionsList.get(i-1)))
+                        sounds.add(getNextSound(currentFrequencyIndex, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    else
+                        sounds.add(getNextSound(currentFrequencyIndex, currentOctave, 125, currentVolume, currentBPM));
                     break;
                 case "plus one octave":
                     sounds.add(getNextSound(currentFrequencyIndex, currentOctave+1, currentInstrument, currentVolume, currentBPM));
@@ -110,7 +122,6 @@ public class Converter {
                     int randomBPM = getRandomBPM(randomValue);
                     sounds.add(getNextSound(currentFrequencyIndex, currentOctave, currentInstrument, currentVolume, randomBPM));
                     break;
-                case "repeat":
                 case "nop":
                     sounds.add(getNextSound(currentFrequencyIndex, currentOctave, currentInstrument, currentVolume, currentBPM));
                     break;
