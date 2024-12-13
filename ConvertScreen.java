@@ -341,6 +341,22 @@ public class ConvertScreen {
         gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
         bottomPanel.add(instrumentOptions, gbcBottomPanel);
 
+        // Style saveMIDIButton
+        JButton saveMIDIButton = new JButton();
+        saveMIDIButton.setText("Save MIDI");
+        saveMIDIButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 15));
+        gbcBottomPanel.gridx = 5;
+        gbcBottomPanel.gridy = 2;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 5);
+        bottomPanel.add(saveMIDIButton, gbcBottomPanel);
+
+        // Action saveMIDIButton
+        saveMIDIButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
         // Style playButton
         ImageIcon play_icon = new ImageIcon(PLAY_BUTTON_ICON_PATH);
         JButton playButton = new JButton(play_icon);
