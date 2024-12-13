@@ -8,11 +8,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ConvertScreen {
 
-    private static final int WINDOW_WIDTH = 1024;
-    private static final int WINDOW_HEIGHT = 768;
+    private static final int WINDOW_WIDTH ;
+    private static final int WINDOW_HEIGHT;
     private static final String SMALL_PEPPERFY_ICON_PATH = "images/small_pepperfy_icon.png";
     private static final String BACK_BUTTON_ICON_PATH = "images/back_icon.png";
     private static final String SAVE_BUTTON_ICON_PATH = "images/save_icon.png";
@@ -20,97 +21,72 @@ public class ConvertScreen {
     private static final String IMPORT_BUTTON_ICON_PATH = "images/import_icon.png";
     private static final String PLAY_BUTTON_ICON_PATH = "images/play_icon.png";
     private static final String CONVERT_TABLE_IMG_PATH = "images/conversion-table.png";
+    private static final String[] INSTRUMENTS = {"Electric Piano 1","Acoustic Guitar","Acoustic Bass", "Violin","Viola","Trumpet","Tuba", "Reed Organ", "Alto Sax", "Clarinet", "Electric Guitar"};
+
+    static {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        WINDOW_WIDTH = screenSize.width;
+        WINDOW_HEIGHT = screenSize.height;
+    }
 
     public ConvertScreen() {
-        JFrame convertFrame = new JFrame();
 
         // Window
+        JFrame convertFrame = new JFrame();
         convertFrame.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         convertFrame.setTitle("CONVERT");
         convertFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        convertFrame.setResizable(false);
+        convertFrame.setResizable(true);
         convertFrame.setLocationRelativeTo(null);
         convertFrame.setLayout(null);
         convertFrame.getContentPane().setBackground(Color.WHITE);
 
+        // Layout manager window
+        convertFrame.setLayout(new BorderLayout());
+
+        // Layout manager panels
+        JPanel centralTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centralTopPanel.setBackground(Color.WHITE);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(Color.WHITE);
+
+        JPanel centralPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbcCentralPanel = new GridBagConstraints();
+        centralPanel.setBackground(Color.WHITE);
+
+        ImagePanel imagePanel = new ImagePanel(CONVERT_TABLE_IMG_PATH);
+
+        JPanel fileButtonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        fileButtonsPanel.setBackground(Color.WHITE);
+
+        JPanel bottomPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbcBottomPanel = new GridBagConstraints();
+        bottomPanel.setBackground(Color.WHITE);
+
+        // -------------------- TOP PANEL --------------------
 
         // Title label
         JLabel Title = new JLabel();
         Title.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");									// Change text color to red
         Title.setFont(new Font("Arial", Font.BOLD, 35));
-        Title.setBounds(400, 10, 300, 60);
-        convertFrame.add(Title);
-
-        // BPM label
-        JLabel BPMLabel = new JLabel();
-        BPMLabel.setText("BPM:");
-        BPMLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        BPMLabel.setBounds(680, 575, 100, 30);
-        convertFrame.add(BPMLabel);
-
-        // inputBPM
-        SpinnerNumberModel spinModelBPM = new SpinnerNumberModel(30, 30, 180, 1);
-        JSpinner inputBPM = new JSpinner(spinModelBPM);
-        inputBPM.setBounds(730, 575, 50, 30);
-        convertFrame.add(inputBPM);
-
-        // Current octave label
-        JLabel currentOctaveLabel = new JLabel();
-        currentOctaveLabel.setText("Current Octave:");
-        currentOctaveLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        currentOctaveLabel.setBounds(810, 575, 140, 30);
-        convertFrame.add(currentOctaveLabel);
-
-        // inputOctave
-        SpinnerNumberModel spinModelOctave = new SpinnerNumberModel(1, 1, 8, 1);
-        JSpinner inputOctave = new JSpinner(spinModelOctave);
-        inputOctave.setBounds(935, 575, 50, 30);
-        convertFrame.add(inputOctave);
-
-        // Volume label
-        JLabel volumeLabel = new JLabel();
-        volumeLabel.setText("Volume:");
-        volumeLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        volumeLabel.setBounds(680, 635, 140, 30);
-        convertFrame.add(volumeLabel);
-
-        // Volume slider
-        JSlider sliderVolume = new JSlider(0, 100, 50);
-        sliderVolume.setBounds(750, 630, 200, 50);
-        sliderVolume.setMajorTickSpacing(20);
-        sliderVolume.setMinorTickSpacing(5);
-        sliderVolume.setPaintTicks(true);
-        sliderVolume.setPaintLabels(true);
-        convertFrame.add(sliderVolume);
+        centralTopPanel.add(Title);
 
         // Pepper.Fy icon
         ImageIcon pepperfyIcon = new ImageIcon(SMALL_PEPPERFY_ICON_PATH);
         JLabel pepperfyLabel = new JLabel(pepperfyIcon);
-        pepperfyLabel.setBounds(580, 10, pepperfyIcon.getIconWidth(), pepperfyIcon.getIconHeight());
-        convertFrame.add(pepperfyLabel);
-
-        // Configure a scroll for the textBox
-        JTextArea textBox = new JTextArea(2,20);
-        JScrollPane scrollPane = new JScrollPane(textBox);
-        scrollPane.setBounds(50, 130, 450, 570);
-        convertFrame.add(scrollPane);
-
-        // Text box
-        Border border = BorderFactory.createLineBorder(Color.BLACK);								// creates a border for the textBox
-        textBox.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        textBox.setLineWrap(true);
-        textBox.setWrapStyleWord(true);
-
+        centralTopPanel.add(pepperfyLabel);
+        topPanel.add(centralTopPanel,BorderLayout.CENTER);
 
         // Style backButton
         ImageIcon back_icon = new ImageIcon(BACK_BUTTON_ICON_PATH);
         JButton backButton = new JButton(back_icon);
-        convertFrame.add(backButton);
-        backButton.setBounds(40, 15, back_icon.getIconWidth(), back_icon.getIconHeight());
         backButton.setBackground(Color.WHITE);
         backButton.setBorderPainted(false);
         backButton.setToolTipText("Back");
         backButton.setFocusPainted(false);
+
+        topPanel.add(backButton,BorderLayout.WEST);
 
         // Action backButton
         backButton.addActionListener(new ActionListener() {
@@ -123,15 +99,33 @@ public class ConvertScreen {
             }
         });
 
+        // -------------------- CENTRAL PANEL --------------------
+
+        // Configure a scroll for the textBox
+        JTextArea textBox = new JTextArea(30, 5);
+        JScrollPane scrollPane = new JScrollPane(textBox);
+        gbcCentralPanel.gridx = 0;
+        gbcCentralPanel.gridy = 1;
+        gbcCentralPanel.gridwidth = 1;
+        gbcCentralPanel.weightx = 1.0;
+        gbcCentralPanel.weighty = 1.0;
+        gbcCentralPanel.fill = GridBagConstraints.BOTH;
+        gbcCentralPanel.insets = new Insets(0, 10, 10, 10);
+        centralPanel.add(scrollPane, gbcCentralPanel);
+
+        // Text box
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        textBox.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        textBox.setLineWrap(true);
+        textBox.setWrapStyleWord(true);
 
         // Style saveButton
         ImageIcon save_icon = new ImageIcon(SAVE_BUTTON_ICON_PATH);
         JButton saveButton = new JButton(save_icon);
-        saveButton.setBounds(70, 93, save_icon.getIconWidth(), save_icon.getIconHeight());
         saveButton.setBackground(Color.WHITE);
         saveButton.setBorderPainted(false);
         saveButton.setToolTipText("Save");
-        convertFrame.add(saveButton);
+        fileButtonsPanel.add(saveButton);
 
         // Action saveButton
         saveButton.addActionListener(new ActionListener() {
@@ -143,7 +137,7 @@ public class ConvertScreen {
                 saveChooser.setDialogTitle("Save as");
 
                 // Configure the filter to save only text files
-                saveChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text files (*.txt)", "txt"));
+                saveChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt)", "txt"));
 
                 // Display the save file dialog
                 int userSelection = saveChooser.showSaveDialog(null);
@@ -175,11 +169,10 @@ public class ConvertScreen {
         // Style pasteButton
         ImageIcon paste_icon = new ImageIcon(PASTE_BUTTON_ICON_PATH);
         JButton pasteButton = new JButton(paste_icon);
-        pasteButton.setBounds(115, 93, paste_icon.getIconWidth(), paste_icon.getIconHeight());
         pasteButton.setBackground(Color.WHITE);
         pasteButton.setBorderPainted(false);
         pasteButton.setToolTipText("Paste");
-        convertFrame.add(pasteButton);
+        fileButtonsPanel.add(pasteButton);
 
         // Action pasteButton
         pasteButton.addActionListener(new ActionListener() {
@@ -207,11 +200,10 @@ public class ConvertScreen {
         // Style importButton
         ImageIcon import_icon = new ImageIcon(IMPORT_BUTTON_ICON_PATH);
         JButton importButton = new JButton(import_icon);
-        importButton.setBounds(160, 93, import_icon.getIconWidth(), import_icon.getIconHeight());
         importButton.setBackground(Color.WHITE);
         importButton.setBorderPainted(false);
         importButton.setToolTipText("Import");
-        convertFrame.add(importButton);
+        fileButtonsPanel.add(importButton);
 
         // Action importButton
         importButton.addActionListener(new ActionListener() {
@@ -223,7 +215,7 @@ public class ConvertScreen {
                 importChooser.setDialogTitle("Open File");
 
                 // Configure the filter to show only text files
-                importChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text files (*.txt)", "txt"));
+                importChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt)", "txt"));
 
                 // Display the select file dialog
                 int userSelection = importChooser.showOpenDialog(null);
@@ -250,29 +242,191 @@ public class ConvertScreen {
             }
         });
 
+        // Adding fileButtonsPanel to centralPanel
+        gbcCentralPanel.gridx = 0;
+        gbcCentralPanel.gridy = 0;
+        gbcCentralPanel.gridwidth = 1;
+        gbcCentralPanel.weightx = 1;
+        gbcCentralPanel.weighty = 0;
+        gbcCentralPanel.fill = GridBagConstraints.HORIZONTAL;
+        gbcCentralPanel.insets = new Insets(0, 0, 0, 0);
+        centralPanel.add(fileButtonsPanel,gbcCentralPanel);
+
+        // Conversion table
+        gbcCentralPanel.gridx = 1;
+        gbcCentralPanel.gridy = 1;
+        gbcCentralPanel.gridwidth = 1;
+        gbcCentralPanel.weightx = 1.0;
+        gbcCentralPanel.weighty = 1.0;
+        gbcCentralPanel.fill = GridBagConstraints.BOTH;
+        gbcCentralPanel.insets = new Insets(0, 10, 10, 10);
+        centralPanel.add(imagePanel,gbcCentralPanel);
+
+
+        // -------------------- BOTTOM PANEL --------------------
+
+        // BPM label
+        JLabel BPMLabel = new JLabel();
+        BPMLabel.setText("BPM:");
+        BPMLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        gbcBottomPanel.gridx = 1;
+        gbcBottomPanel.gridy = 1;
+        gbcBottomPanel.gridwidth = 1;
+        gbcBottomPanel.gridheight = 1;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 5);
+        bottomPanel.add(BPMLabel, gbcBottomPanel);
+
+        // inputBPM
+        SpinnerNumberModel spinModelBPM = new SpinnerNumberModel(30, 30, 180, 1);
+        JSpinner inputBPM = new JSpinner(spinModelBPM);
+        gbcBottomPanel.gridx = 2;
+        gbcBottomPanel.gridy = 1;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
+        bottomPanel.add(inputBPM, gbcBottomPanel);
+
+        // Octave label
+        JLabel OctaveLabel = new JLabel();
+        OctaveLabel.setText("Octave:");
+        OctaveLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        gbcBottomPanel.gridx = 1;
+        gbcBottomPanel.gridy = 2;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 5);
+        bottomPanel.add(OctaveLabel, gbcBottomPanel);
+
+
+        // inputOctave
+        SpinnerNumberModel spinModelOctave = new SpinnerNumberModel(1, 1, 8, 1);
+        JSpinner inputOctave = new JSpinner(spinModelOctave);
+        gbcBottomPanel.gridx = 2;
+        gbcBottomPanel.gridy = 2;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
+        bottomPanel.add(inputOctave, gbcBottomPanel);
+
+        // Volume label
+        JLabel volumeLabel = new JLabel();
+        volumeLabel.setText("Volume:");
+        volumeLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        gbcBottomPanel.gridx = 3;
+        gbcBottomPanel.gridy = 1;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
+        bottomPanel.add(volumeLabel, gbcBottomPanel);
+
+        // Volume slider
+        JSlider sliderVolume = new JSlider(0, 100, 50);
+        sliderVolume.setMajorTickSpacing(20);
+        sliderVolume.setMinorTickSpacing(5);
+        sliderVolume.setPaintTicks(true);
+        sliderVolume.setPaintLabels(true);
+        gbcBottomPanel.gridx = 3;
+        gbcBottomPanel.gridy = 2;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
+        bottomPanel.add(sliderVolume, gbcBottomPanel);
+
+        // Instrument label
+        JLabel instrumentLabel = new JLabel();
+        instrumentLabel.setText("Instrument:");
+        instrumentLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        gbcBottomPanel.gridx = 4;
+        gbcBottomPanel.gridy = 1;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
+        bottomPanel.add(instrumentLabel, gbcBottomPanel);
+
+        // Instrument selector
+        JComboBox<String> instrumentOptions = new JComboBox<>();
+        for (String instrument : INSTRUMENTS) {
+            instrumentOptions.addItem(instrument);
+        }
+        gbcBottomPanel.gridx = 4;
+        gbcBottomPanel.gridy = 2;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
+        bottomPanel.add(instrumentOptions, gbcBottomPanel);
+
         // Style playButton
         ImageIcon play_icon = new ImageIcon(PLAY_BUTTON_ICON_PATH);
         JButton playButton = new JButton(play_icon);
-        playButton.setBounds(520, 560, play_icon.getIconWidth(), play_icon.getIconHeight());
         playButton.setBackground(Color.WHITE);
         playButton.setBorderPainted(false);
         playButton.setToolTipText("Play");
-        convertFrame.add(playButton);
+
+        gbcBottomPanel.gridx = 0;
+        gbcBottomPanel.gridy = 1;
+        gbcBottomPanel.gridheight = 3;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
+        bottomPanel.add(playButton, gbcBottomPanel);
 
         // Action playButton
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TextSheet currentText= new TextSheet(textBox.getText(),0);
+                Converter.defaultBPM = (int) inputBPM.getValue();
+                Converter.defaultOctave = (int) inputOctave.getValue();
+                Converter.defaultVolume = sliderVolume.getValue();
+                String selectedInstrument = (String) instrumentOptions.getSelectedItem();
+
+                switch (selectedInstrument){
+                    case "Electric Piano 1":
+                        Converter.defaultInstrument = 3;
+                        break;
+
+                    case "Acoustic Guitar":
+                        Converter.defaultInstrument = 25;
+                        break;
+
+                    case "Acoustic Bass":
+                        Converter.defaultInstrument = 33;
+                        break;
+
+                    case "Violin":
+                        Converter.defaultInstrument = 41;
+                        break;
+
+                    case "Viola":
+                        Converter.defaultInstrument = 42;
+                        break;
+
+                    case "Trumpet":
+                        Converter.defaultInstrument = 57;
+                        break;
+
+                    case "Tuba":
+                        Converter.defaultInstrument = 59;
+                        break;
+
+                    case "Reed Organ":
+                        Converter.defaultInstrument = 21;
+                        break;
+
+                    case "Alto Sax":
+                        Converter.defaultInstrument = 66;
+                        break;
+
+                    case "Clarinet":
+                        Converter.defaultInstrument = 72;
+                        break;
+
+                    case "Electric Guitar":
+                        Converter.defaultInstrument = 29;
+                        break;
+
+                    case null:
+                        break;
+
+                    default:
+                        Converter.defaultInstrument = 1;
+                        break;
+                }
+
             }
         });
 
-        // Conversion table
-        ImageIcon tableIcon = new ImageIcon(CONVERT_TABLE_IMG_PATH);
-        JLabel tableLabel = new JLabel(tableIcon);
-        tableLabel.setBounds(520, 130, tableIcon.getIconWidth(), tableIcon.getIconHeight());
-        convertFrame.add(tableLabel);
+
+        // Adding the created panels to the window
+        convertFrame.add(topPanel,BorderLayout.NORTH);
+        convertFrame.add(centralPanel,BorderLayout.CENTER);
+        convertFrame.add(bottomPanel,BorderLayout.SOUTH);
 
         convertFrame.setVisible(true);
     }
 }
+

@@ -4,10 +4,10 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Converter {
-    public static int defaultOctave = 4;
-    public static int defaultVolume = 50;
-    public static int defaultInstrument = 1;
-    public static int defaultBPM = 60;
+    public static int defaultOctave;
+    public static int defaultVolume;
+    public static int defaultInstrument;
+    public static int defaultBPM;
 
     private static int currentOffsetIndex;
     private static int currentOctave;

@@ -1,111 +1,115 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
-import java.awt.Color;
 
 public class MenuScreen {
 
-    private static final int WINDOW_WIDTH = 1024;
-    private static final int WINDOW_HEIGHT = 768;
+    private static final int WINDOW_WIDTH ;
+    private static final int WINDOW_HEIGHT;
     private static final String PEPPERFY_ICON_PATH = "images/pepperfy_icon.png";
 
+    static {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        WINDOW_WIDTH = screenSize.width;
+        WINDOW_HEIGHT = screenSize.height;
+    }
+
     public MenuScreen() {
-        JFrame menuFrame = new JFrame();
-        JButton convertButton = new JButton();
-        JButton tutorialButton = new JButton();
-        JButton exitButton = new JButton();
-        JLabel Title = new JLabel();
 
         // Window
-        menuFrame.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+        JFrame menuFrame = new JFrame();
+        menuFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         menuFrame.setTitle("MENU");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setResizable(false);
+        menuFrame.setResizable(true);
         menuFrame.setLocationRelativeTo(null);
-        menuFrame.setLayout(null);
         menuFrame.getContentPane().setBackground(Color.WHITE);
 
-        // Label
+        // Layout manager
+        menuFrame.setLayout(new GridBagLayout());
+        GridBagConstraints gbcMenuFrame = new GridBagConstraints();
+
+        // Label (Title)
+        JLabel Title = new JLabel();
         Title.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");
         Title.setFont(new Font("Arial", Font.BOLD, 80));
-        Title.setBounds(270, 130, 470, 65);
-        menuFrame.add(Title);
+        gbcMenuFrame.gridx = 0;
+        gbcMenuFrame.gridy = 0;
+        gbcMenuFrame.gridwidth = 2;
+        menuFrame.add(Title, gbcMenuFrame);
 
         // Pepper.Fy icon
         ImageIcon pepperfyIcon = new ImageIcon(PEPPERFY_ICON_PATH);
         JLabel pepperfyLabel = new JLabel(pepperfyIcon);
-        pepperfyLabel.setBounds(655, 60, pepperfyIcon.getIconWidth(), pepperfyIcon.getIconHeight());
-        menuFrame.add(pepperfyLabel);
+        gbcMenuFrame.gridx =2;
+        gbcMenuFrame.gridy = 0;
+        gbcMenuFrame.gridwidth = 1;
+        menuFrame.add(pepperfyLabel, gbcMenuFrame);
 
-
-        // Style covertButton
+        // Button: Convert
+        JButton convertButton = new JButton();
         convertButton.setText("Convert");
-        convertButton.setBounds(355, 280, 300, 60);
         convertButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 50));
         convertButton.setBackground(Color.WHITE);
         convertButton.setForeground(Color.BLACK);
         convertButton.setFocusPainted(false);
-        menuFrame.add(convertButton);
+        gbcMenuFrame.gridx = 0;
+        gbcMenuFrame.gridy = 1;
+        gbcMenuFrame.gridwidth = 3;
+        gbcMenuFrame.fill = GridBagConstraints.HORIZONTAL;
+        gbcMenuFrame.insets = new java.awt.Insets(20, 0, 0, 0);
+        menuFrame.add(convertButton, gbcMenuFrame);
 
         // Action convertButton
         convertButton.addActionListener(new ActionListener() {
-
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 menuFrame.dispose();
                 CurrentScreen.setCurrentScreen("convert");
             }
         });
 
-
-
-        // Style tutorialButton
+        // Button: Tutorial
+        JButton tutorialButton = new JButton();
         tutorialButton.setText("Tutorial");
-        tutorialButton.setBounds(355, 380, 300, 60);
         tutorialButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 50));
         tutorialButton.setBackground(Color.WHITE);
         tutorialButton.setForeground(Color.BLACK);
-        menuFrame.add(tutorialButton);
+        gbcMenuFrame.gridy = 2;
+        menuFrame.add(tutorialButton, gbcMenuFrame);
 
         // Action tutorialButton
         tutorialButton.addActionListener(new ActionListener() {
-
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 menuFrame.dispose();
                 CurrentScreen.setCurrentScreen("tutorial");
             }
         });
 
-
-        // Style exitButton
-        menuFrame.add(exitButton);
+        // Button: Exit
+        JButton exitButton = new JButton();
         exitButton.setText("Exit");
-        exitButton.setBounds(355, 480, 300, 60);
         exitButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 50));
         exitButton.setBackground(Color.WHITE);
         exitButton.setForeground(Color.BLACK);
+        gbcMenuFrame.gridy = 3;
+        menuFrame.add(exitButton, gbcMenuFrame);
 
-        // Action exitButton Button
+        // Action exitButton
         exitButton.addActionListener(new ActionListener() {
-
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                int answer = JOptionPane.showConfirmDialog(null,"Are you sure you want to leave?","Confirmation",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
-
+            public void actionPerformed(ActionEvent e) {
+                int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to leave?", "Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (answer == JOptionPane.OK_OPTION) {
                     System.exit(0);
                 }
             }
-
         });
 
+
         menuFrame.setVisible(true);
-
     }
-
 }
+

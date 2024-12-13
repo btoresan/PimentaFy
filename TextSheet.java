@@ -1,12 +1,16 @@
 public class TextSheet {
-    public String text;
-    public int index;
+    private String text;
+    private int index;
 
     public TextSheet(String inputText, int index) {
         setText(inputText);
-        this.index = index;
+        setIndex(index);
     }
 
     public void setText(String inputText) {text = inputText;}
+    public String getText() {return text;}
+    public void setIndex(int index) {this.index = index;}
+    public int getIndex() {return index;}
+
 
 }
