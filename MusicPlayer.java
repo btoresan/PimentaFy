@@ -53,7 +53,8 @@ public class MusicPlayer {
         try {
             // Get a MIDI channel to play notes
             MidiChannel[] channels = synthesizer.getChannels();
-            MidiChannel channel = channels[instrument];
+            MidiChannel channel = channels[0];
+            channel.programChange(instrument);
 
             // Play the note
             channel.noteOn(pitch, volume);

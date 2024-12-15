@@ -36,7 +36,7 @@ public class Converter {
         currentOffsetIndex = offsetIndex;
         currentOctave = octave;
         currentInstrument = instrument;
-        currentVolume = volume;
+        //currentVolume = volume;
         currentBPM = BPM;
     }
 
@@ -103,17 +103,17 @@ public class Converter {
                         sounds.add(getNextSound(currentOffsetIndex, currentOctave, 125, currentVolume, currentBPM));
                     break;
                 case "plus one octave":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave+1, currentInstrument, currentVolume, currentBPM));
+                    currentOctave = currentOctave + 1;
                     break;
                 case "minus one octave":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave-1, currentInstrument, currentVolume, currentBPM));
+                    currentOctave = currentOctave - 1;
                     break;
                 case "random note":
                     int randomFrequency = randomValue.nextInt(7);
                     sounds.add(getNextSound(randomFrequency, currentOctave, currentInstrument, currentVolume, currentBPM));
                     break;
                 case "plus one instrument":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument+1, currentVolume, currentBPM));
+                    currentInstrument = currentInstrument+1;
                     break;
                 case "plus 80 bpm":
                     sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, currentVolume, currentBPM+80));

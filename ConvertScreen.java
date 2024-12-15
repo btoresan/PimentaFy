@@ -12,6 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 public class ConvertScreen {
 
     private static final int WINDOW_WIDTH ;
@@ -32,6 +33,42 @@ public class ConvertScreen {
     }
 
     public ConvertScreen() {
+
+//        private void askAndSaveMidiFile(ArrayList<Sound> sounds) {
+//
+//            // Display confirmation popup
+//            int confirmSaveMIDI = JOptionPane.showConfirmDialog(
+//                    null,
+//                    "Save MIDI file?",
+//                    "Salve MIDI",
+//                    JOptionPane.YES_NO_OPTION
+//            );
+//
+//            // If the user clicks "Yes"
+//            if (confirmSaveMIDI == JOptionPane.YES_OPTION) {
+//                JFileChooser fileChooser = new JFileChooser();
+//                fileChooser.setDialogTitle("Save as MIDI file");
+//                fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("MIDI files (*.mid)", "mid"));
+//
+//                int userSelection = fileChooser.showSaveDialog(null);
+//
+//                if (userSelection == JFileChooser.APPROVE_OPTION) {
+//                    File fileToSave = fileChooser.getSelectedFile();
+//                    String filePath = fileToSave.getAbsolutePath();
+//                    if (!filePath.toLowerCase().endsWith(".mid")) {
+//                        filePath += ".mid";
+//                    }
+//
+//                    try {
+//                        // Save MIDI file
+//                        Converter.saveAsMidiFile(sounds, filePath);
+//                        JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+//                    } catch (Exception ex) {
+//                        JOptionPane.showMessageDialog(null, "Erro ao salvar o arquivo: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+//                    }
+//                }
+//            }
+//        }
 
         // Window
         JFrame convertFrame = new JFrame();
@@ -279,7 +316,7 @@ public class ConvertScreen {
         bottomPanel.add(BPMLabel, gbcBottomPanel);
 
         // inputBPM
-        SpinnerNumberModel spinModelBPM = new SpinnerNumberModel(30, 30, 180, 1);
+        SpinnerNumberModel spinModelBPM = new SpinnerNumberModel(60, 30, 600, 1);
         JSpinner inputBPM = new JSpinner(spinModelBPM);
         gbcBottomPanel.gridx = 2;
         gbcBottomPanel.gridy = 1;
@@ -297,7 +334,7 @@ public class ConvertScreen {
 
 
         // inputOctave
-        SpinnerNumberModel spinModelOctave = new SpinnerNumberModel(1, 1, 8, 1);
+        SpinnerNumberModel spinModelOctave = new SpinnerNumberModel(4, 1, 8, 1);
         JSpinner inputOctave = new JSpinner(spinModelOctave);
         gbcBottomPanel.gridx = 2;
         gbcBottomPanel.gridy = 2;
@@ -343,21 +380,6 @@ public class ConvertScreen {
         gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
         bottomPanel.add(instrumentOptions, gbcBottomPanel);
 
-        // Style saveMIDIButton
-        JButton saveMIDIButton = new JButton();
-        saveMIDIButton.setText("Save MIDI");
-        saveMIDIButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 15));
-        gbcBottomPanel.gridx = 5;
-        gbcBottomPanel.gridy = 2;
-        gbcBottomPanel.insets = new Insets(5, 5, 5, 5);
-        bottomPanel.add(saveMIDIButton, gbcBottomPanel);
-
-        // Action saveMIDIButton
-        saveMIDIButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
 
         // Style playButton
         ImageIcon play_icon = new ImageIcon(PLAY_BUTTON_ICON_PATH);
@@ -390,43 +412,43 @@ public class ConvertScreen {
                         break;
 
                     case "Acoustic Guitar":
-                        defaultInstrument = 25;
+                        defaultInstrument = 24;
                         break;
 
                     case "Acoustic Bass":
-                        defaultInstrument = 33;
+                        defaultInstrument = 32;
                         break;
 
                     case "Violin":
-                        defaultInstrument = 41;
+                        defaultInstrument = 40;
                         break;
 
                     case "Viola":
-                        defaultInstrument = 42;
+                        defaultInstrument = 41;
                         break;
 
                     case "Trumpet":
-                        defaultInstrument = 57;
+                        defaultInstrument = 56;
                         break;
 
                     case "Tuba":
-                        defaultInstrument = 59;
+                        defaultInstrument = 58;
                         break;
 
                     case "Reed Organ":
-                        defaultInstrument = 21;
+                        defaultInstrument = 20;
                         break;
 
                     case "Alto Sax":
-                        defaultInstrument = 66;
+                        defaultInstrument = 65;
                         break;
 
                     case "Clarinet":
-                        defaultInstrument = 72;
+                        defaultInstrument = 71;
                         break;
 
                     case "Electric Guitar":
-                        defaultInstrument = 29;
+                        defaultInstrument = 28;
                         break;
 
                     case null:
@@ -444,6 +466,9 @@ public class ConvertScreen {
                 musicPlayer.play();
 
             }
+
+
+
         });
 
 
