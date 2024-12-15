@@ -3,6 +3,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -375,63 +377,71 @@ public class ConvertScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TextSheet currentText= new TextSheet(textBox.getText(),0);
-                Converter.defaultBPM = (int) inputBPM.getValue();
-                Converter.defaultOctave = (int) inputOctave.getValue();
-                Converter.defaultVolume = sliderVolume.getValue();
+                int defaultBPM = (int) inputBPM.getValue();
+                int defaultOctave = (int) inputOctave.getValue();
+                int defaultVolume = sliderVolume.getValue();
+                int defaultInstrument=0;
+
                 String selectedInstrument = (String) instrumentOptions.getSelectedItem();
 
                 switch (selectedInstrument){
                     case "Electric Piano 1":
-                        Converter.defaultInstrument = 3;
+                        defaultInstrument = 4;
                         break;
 
                     case "Acoustic Guitar":
-                        Converter.defaultInstrument = 25;
+                        defaultInstrument = 25;
                         break;
 
                     case "Acoustic Bass":
-                        Converter.defaultInstrument = 33;
+                        defaultInstrument = 33;
                         break;
 
                     case "Violin":
-                        Converter.defaultInstrument = 41;
+                        defaultInstrument = 41;
                         break;
 
                     case "Viola":
-                        Converter.defaultInstrument = 42;
+                        defaultInstrument = 42;
                         break;
 
                     case "Trumpet":
-                        Converter.defaultInstrument = 57;
+                        defaultInstrument = 57;
                         break;
 
                     case "Tuba":
-                        Converter.defaultInstrument = 59;
+                        defaultInstrument = 59;
                         break;
 
                     case "Reed Organ":
-                        Converter.defaultInstrument = 21;
+                        defaultInstrument = 21;
                         break;
 
                     case "Alto Sax":
-                        Converter.defaultInstrument = 66;
+                        defaultInstrument = 66;
                         break;
 
                     case "Clarinet":
-                        Converter.defaultInstrument = 72;
+                        defaultInstrument = 72;
                         break;
 
                     case "Electric Guitar":
-                        Converter.defaultInstrument = 29;
+                        defaultInstrument = 29;
                         break;
 
                     case null:
                         break;
 
                     default:
-                        Converter.defaultInstrument = 1;
+                        defaultInstrument = 1;
                         break;
                 }
+
+                Converter.setDefaultConfig(defaultOctave,defaultVolume,defaultInstrument,defaultBPM);
+                List<String> actions = MappingTable.convertToActions(currentText.getText());
+                ArrayList<Sound> sounds = Converter.convertToSounds(actions);
+                MusicPlayer musicPlayer = new MusicPlayer(sounds);
+                musicPlayer.play();
 
             }
         });
