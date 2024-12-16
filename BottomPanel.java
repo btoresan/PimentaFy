@@ -1,13 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BottomPanel extends JPanel {
-    private static final String PLAY_BUTTON_ICON_PATH = "images/play_icon.png";
+
     private static final String[] INSTRUMENTS = {"Electric Piano 1","Acoustic Guitar","Acoustic Bass", "Violin","Viola","Trumpet","Tuba", "Reed Organ", "Alto Sax", "Clarinet", "Electric Guitar"};
 
     public BottomPanel(CentralPanel centralPanel,JFrame convertFrame) {
@@ -90,97 +85,22 @@ public class BottomPanel extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 40);
         add(instrumentOptions, gbc);
 
-        // Style saveMIDIButton
-        JButton saveMIDIButton = new JButton();
-        saveMIDIButton.setText("Save MIDI");
-        saveMIDIButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 15));
+        // Buttons
+        SaveMIDIButton saveMIDIButton = new SaveMIDIButton(centralPanel.getTextBox(),inputBPM,inputOctave,sliderVolume,instrumentOptions,convertFrame);
         gbc.gridx = 5;
         gbc.gridy = 2;
         gbc.insets = new Insets(5, 5, 5, 5);
         add(saveMIDIButton, gbc);
 
-        // Action saveMIDIButton
-        saveMIDIButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TextSheet currentText= new TextSheet((centralPanel.getTextBox()).getText(),0);
-                int defaultBPM = (int) inputBPM.getValue();
-                int defaultOctave = (int) inputOctave.getValue();
-                int defaultVolume = sliderVolume.getValue();
-                int defaultInstrument=0;
-
-                String selectedInstrument = (String) instrumentOptions.getSelectedItem();
-
-                defaultInstrument = extractInstrument(selectedInstrument);
-                Converter.setDefaultConfig(defaultOctave,defaultVolume,defaultInstrument,defaultBPM);
-                List<String> actions = MappingTable.convertToActions(currentText.getText());
-                ArrayList<Sound> sounds = Converter.convertToSounds(actions);
-
-                JFileChooser MIDIFileChooser = new JFileChooser();
-                MIDIFileChooser.setDialogTitle("Save MIDI file");
-
-                // Configuring default .mid extension
-                MIDIFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("MIDI file (*.mid)", "mid"));
-
-                int userSelection = MIDIFileChooser.showSaveDialog(convertFrame);
-
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToSave = MIDIFileChooser.getSelectedFile();
-
-                    // Adds .mid extension if user does not specify it
-                    String filePath = fileToSave.getAbsolutePath();
-                    if (!filePath.toLowerCase().endsWith(".mid")) {
-                        filePath += ".mid";
-                    }
-
-                    // Salvar arquivo
-                    try {
-                        MidiFileCreator.saveAsMidiFile(sounds, filePath);
-                        JOptionPane.showMessageDialog(convertFrame, "File saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(convertFrame, "Error saving file:" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-
-            }
-        });
-
-        // Style playButton
-        ImageIcon play_icon = new ImageIcon(PLAY_BUTTON_ICON_PATH);
-        JButton playButton = new JButton(play_icon);
-        playButton.setBackground(Color.WHITE);
-        playButton.setBorderPainted(false);
-        playButton.setToolTipText("Play");
+        PlayButton playButton = new PlayButton(centralPanel.getTextBox(),inputBPM,inputOctave,sliderVolume,instrumentOptions);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridheight = 3;
         gbc.insets = new Insets(5, 5, 5, 40);
         add(playButton, gbc);
 
-        // Action playButton
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TextSheet currentText= new TextSheet((centralPanel.getTextBox()).getText(),0);
-                int defaultBPM = (int) inputBPM.getValue();
-                int defaultOctave = (int) inputOctave.getValue();
-                int defaultVolume = sliderVolume.getValue();
-                int defaultInstrument=0;
-
-                String selectedInstrument = (String) instrumentOptions.getSelectedItem();
-
-                defaultInstrument = extractInstrument(selectedInstrument);
-                Converter.setDefaultConfig(defaultOctave,defaultVolume,defaultInstrument,defaultBPM);
-                List<String> actions = MappingTable.convertToActions(currentText.getText());
-                ArrayList<Sound> sounds = Converter.convertToSounds(actions);
-                MusicPlayer musicPlayer = new MusicPlayer(sounds);
-                musicPlayer.play();
-            }
-        });
-
     }
-
-    private int extractInstrument (String instrumentText){
+    public static int extractInstrument (String instrumentText){
         return switch (instrumentText) {
             case "Electric Piano 1" -> 4;
             case "Acoustic Guitar" -> 24;
