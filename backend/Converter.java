@@ -118,7 +118,7 @@ public class Converter {
                 case "plus one instrument":
                     currentInstrument++;
                     break;
-                case "plus 80 bpm":
+                case "faster notes":
                     currentBPM = currentBPM + 80;
                     break;
                 case "random bpm":
