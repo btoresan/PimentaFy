@@ -32,43 +32,47 @@ public class ConvertScreen {
         WINDOW_HEIGHT = screenSize.height;
     }
 
-    public ConvertScreen() {
+    private int extractInstrument (String instrumentText){
+        switch (instrumentText){
+            case "Electric Piano 1":
+               return  4;
 
-//        private void askAndSaveMidiFile(ArrayList<Sound> sounds) {
-//
-//            // Display confirmation popup
-//            int confirmSaveMIDI = JOptionPane.showConfirmDialog(
-//                    null,
-//                    "Save MIDI file?",
-//                    "Salve MIDI",
-//                    JOptionPane.YES_NO_OPTION
-//            );
-//
-//            // If the user clicks "Yes"
-//            if (confirmSaveMIDI == JOptionPane.YES_OPTION) {
-//                JFileChooser fileChooser = new JFileChooser();
-//                fileChooser.setDialogTitle("Save as MIDI file");
-//                fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("MIDI files (*.mid)", "mid"));
-//
-//                int userSelection = fileChooser.showSaveDialog(null);
-//
-//                if (userSelection == JFileChooser.APPROVE_OPTION) {
-//                    File fileToSave = fileChooser.getSelectedFile();
-//                    String filePath = fileToSave.getAbsolutePath();
-//                    if (!filePath.toLowerCase().endsWith(".mid")) {
-//                        filePath += ".mid";
-//                    }
-//
-//                    try {
-//                        // Save MIDI file
-//                        Converter.saveAsMidiFile(sounds, filePath);
-//                        JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-//                    } catch (Exception ex) {
-//                        JOptionPane.showMessageDialog(null, "Erro ao salvar o arquivo: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-//                    }
-//                }
-//            }
-//        }
+            case "Acoustic Guitar":
+                return  24;
+
+            case "Acoustic Bass":
+                return 32;
+
+            case "Violin":
+                return 40;
+
+            case "Viola":
+                return  41;
+
+            case "Trumpet":
+                return 56;
+
+            case "Tuba":
+                return 58;
+
+            case "Reed Organ":
+                return 20;
+
+            case "Alto Sax":
+                return 65;
+
+            case "Clarinet":
+                return 71;
+
+            case "Electric Guitar":
+                return 28;
+
+            default:
+                return 1;
+        }
+    }
+
+    public ConvertScreen() {
 
         // Window
         JFrame convertFrame = new JFrame();
@@ -104,7 +108,6 @@ public class ConvertScreen {
         bottomPanel.setBackground(Color.WHITE);
 
         // -------------------- TOP PANEL --------------------
-
         // Title label
         JLabel Title = new JLabel();
         Title.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");									// Change text color to red
@@ -380,6 +383,61 @@ public class ConvertScreen {
         gbcBottomPanel.insets = new Insets(5, 5, 5, 40);
         bottomPanel.add(instrumentOptions, gbcBottomPanel);
 
+        // Style saveMIDIButton
+        JButton saveMIDIButton = new JButton();
+        saveMIDIButton.setText("Save MIDI");
+        saveMIDIButton.setFont(new Font("Arial", Font.ROMAN_BASELINE, 15));
+        gbcBottomPanel.gridx = 5;
+        gbcBottomPanel.gridy = 2;
+        gbcBottomPanel.insets = new Insets(5, 5, 5, 5);
+        bottomPanel.add(saveMIDIButton, gbcBottomPanel);
+
+        // Action saveMIDIButton
+        saveMIDIButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                TextSheet currentText= new TextSheet(textBox.getText(),0);
+                int defaultBPM = (int) inputBPM.getValue();
+                int defaultOctave = (int) inputOctave.getValue();
+                int defaultVolume = sliderVolume.getValue();
+                int defaultInstrument=0;
+
+                String selectedInstrument = (String) instrumentOptions.getSelectedItem();
+
+                defaultInstrument = extractInstrument(selectedInstrument);
+                Converter.setDefaultConfig(defaultOctave,defaultVolume,defaultInstrument,defaultBPM);
+                List<String> actions = MappingTable.convertToActions(currentText.getText());
+                ArrayList<Sound> sounds = Converter.convertToSounds(actions);
+
+                JFileChooser MIDIFileChooser = new JFileChooser();
+                MIDIFileChooser.setDialogTitle("Save MIDI file");
+
+                // Configuring default .mid extension
+                MIDIFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("MIDI file (*.mid)", "mid"));
+
+                int userSelection = MIDIFileChooser.showSaveDialog(convertFrame);
+
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    File fileToSave = MIDIFileChooser.getSelectedFile();
+
+                    // Adds .mid extension if user does not specify it
+                    String filePath = fileToSave.getAbsolutePath();
+                    if (!filePath.toLowerCase().endsWith(".mid")) {
+                        filePath += ".mid";
+                    }
+
+                    // Salvar arquivo
+                    try {
+                        MidiFileCreator.saveAsMidiFile(sounds, filePath);
+                        JOptionPane.showMessageDialog(convertFrame, "File saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(convertFrame, "Error saving file:" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
+            }
+        });
 
         // Style playButton
         ImageIcon play_icon = new ImageIcon(PLAY_BUTTON_ICON_PATH);
@@ -406,69 +464,13 @@ public class ConvertScreen {
 
                 String selectedInstrument = (String) instrumentOptions.getSelectedItem();
 
-                switch (selectedInstrument){
-                    case "Electric Piano 1":
-                        defaultInstrument = 4;
-                        break;
-
-                    case "Acoustic Guitar":
-                        defaultInstrument = 24;
-                        break;
-
-                    case "Acoustic Bass":
-                        defaultInstrument = 32;
-                        break;
-
-                    case "Violin":
-                        defaultInstrument = 40;
-                        break;
-
-                    case "Viola":
-                        defaultInstrument = 41;
-                        break;
-
-                    case "Trumpet":
-                        defaultInstrument = 56;
-                        break;
-
-                    case "Tuba":
-                        defaultInstrument = 58;
-                        break;
-
-                    case "Reed Organ":
-                        defaultInstrument = 20;
-                        break;
-
-                    case "Alto Sax":
-                        defaultInstrument = 65;
-                        break;
-
-                    case "Clarinet":
-                        defaultInstrument = 71;
-                        break;
-
-                    case "Electric Guitar":
-                        defaultInstrument = 28;
-                        break;
-
-                    case null:
-                        break;
-
-                    default:
-                        defaultInstrument = 1;
-                        break;
-                }
-
+                defaultInstrument = extractInstrument(selectedInstrument);
                 Converter.setDefaultConfig(defaultOctave,defaultVolume,defaultInstrument,defaultBPM);
                 List<String> actions = MappingTable.convertToActions(currentText.getText());
                 ArrayList<Sound> sounds = Converter.convertToSounds(actions);
                 MusicPlayer musicPlayer = new MusicPlayer(sounds);
                 musicPlayer.play();
-
             }
-
-
-
         });
 
 
