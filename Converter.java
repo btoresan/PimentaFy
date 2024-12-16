@@ -118,7 +118,7 @@ public class Converter {
                     currentInstrument++;
                     break;
                 case "plus 80 bpm":
-                    currentBPM++;
+                    currentBPM = currentBPM + 80;
                     break;
                 case "random bpm":
                     currentBPM = getRandomBPM(randomValue);
