@@ -32,19 +32,21 @@ public class Converter {
         currentBPM = defaultBPM = bpm;
     }
 
-    private static void saveLastSound(int offsetIndex, int octave, int instrument, int volume, int BPM) {
+    private static void saveLastSound(int offsetIndex, int octave, int instrument, int volume, int BPM, boolean isSilence) {
         currentOffsetIndex = offsetIndex;
         currentOctave = octave;
         currentInstrument = instrument;
-        //currentVolume = volume;
         currentBPM = BPM;
+
+        if(!isSilence)
+            currentVolume = volume;
     }
 
-    private static Sound getNextSound(int offsetIndex, int octave, int instrument, int volume, int bpm) {
+    private static Sound getNextSound(int offsetIndex, int octave, int instrument, int volume, int bpm, boolean isSIlence) {
         int offset = noteOffset[offsetIndex];
 
         Sound nextSound = new Sound(offset, octave, instrument, volume, bpm);
-        saveLastSound(offsetIndex, octave, instrument, volume, bpm);
+        saveLastSound(offsetIndex, octave, instrument, volume, bpm, isSIlence);
 
         return nextSound;
     }
@@ -67,65 +69,61 @@ public class Converter {
         for (int i=0; i<actionsList.size(); i++) {
             switch (actionsList.get(i)) {
                 case "la":
-                    sounds.add(getNextSound(A_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    sounds.add(getNextSound(A_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     break;
                 case "si":
-                    sounds.add(getNextSound(B_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    sounds.add(getNextSound(B_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     break;
                 case "do":
-                    sounds.add(getNextSound(C_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    sounds.add(getNextSound(C_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     break;
                 case "re":
-                    sounds.add(getNextSound(D_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM));;
+                    sounds.add(getNextSound(D_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM, false));;
                     break;
                 case "mi":
-                    sounds.add(getNextSound(E_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    sounds.add(getNextSound(E_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     break;
                 case "fa":
-                    sounds.add(getNextSound(F_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    sounds.add(getNextSound(F_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     break;
                 case "sol":
-                    sounds.add(getNextSound(G_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    sounds.add(getNextSound(G_OFFSET, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     break;
                 case "silence":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, 0, currentBPM));
+                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, 0, currentBPM, true));
                     break;
                 case "double volume":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, currentVolume*2, currentBPM));
+                    currentVolume = currentVolume * 2;
                     break;
                 case "default volume":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, defaultVolume, currentBPM));
+                    currentVolume = defaultVolume;
                     break;
                 case "repeat or phone":
                     if (isNoteAction(actionsList.get(i-1)))
-                        sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, currentVolume, currentBPM));
+                        sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     else
-                        sounds.add(getNextSound(currentOffsetIndex, currentOctave, 125, currentVolume, currentBPM));
+                        sounds.add(getNextSound(currentOffsetIndex, currentOctave, 125, currentVolume, currentBPM, false));
                     break;
                 case "plus one octave":
-                    currentOctave = currentOctave + 1;
+                    currentOctave++;
                     break;
                 case "minus one octave":
-                    currentOctave = currentOctave - 1;
+                    currentOctave--;
                     break;
                 case "random note":
                     int randomFrequency = randomValue.nextInt(7);
-                    sounds.add(getNextSound(randomFrequency, currentOctave, currentInstrument, currentVolume, currentBPM));
+                    sounds.add(getNextSound(randomFrequency, currentOctave, currentInstrument, currentVolume, currentBPM, false));
                     break;
                 case "plus one instrument":
-                    currentInstrument = currentInstrument+1;
+                    currentInstrument++;
                     break;
                 case "plus 80 bpm":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, currentVolume, currentBPM+80));
+                    currentBPM++;
                     break;
                 case "random bpm":
-                    int randomBPM = getRandomBPM(randomValue);
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, currentVolume, randomBPM));
+                    currentBPM = getRandomBPM(randomValue);
                     break;
                 case "nop":
-                    sounds.add(getNextSound(currentOffsetIndex, currentOctave, currentInstrument, currentVolume, currentBPM));
-                    break;
-                case "":
                     break;
                 default:
             }
