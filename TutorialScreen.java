@@ -8,8 +8,6 @@ public class TutorialScreen {
 
     private static final int WINDOW_WIDTH ;
     private static final int WINDOW_HEIGHT;
-    private static final String SMALL_PEPPERFY_ICON_PATH = "images/small_pepperfy_icon.png";
-    private static final String BACK_BUTTON_ICON_PATH = "images/back_icon.png";
     private static final String TUTORIAL_SCREEN_IMG_PATH = "images/tutorial-screen.png";
 
     static {
@@ -33,12 +31,8 @@ public class TutorialScreen {
         // Layout manager window
         tutorialFrame.setLayout(new BorderLayout());
 
-        // Layout manager panels
-        JPanel centralTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        centralTopPanel.setBackground(Color.WHITE);
-
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(Color.WHITE);
+        // Panels for the tutorial frame
+        TopPanel topPanel = new TopPanel(tutorialFrame);
 
         JPanel centralPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbcCentralPanel = new GridBagConstraints();
@@ -46,41 +40,6 @@ public class TutorialScreen {
 
         ImagePanel imagePanel = new ImagePanel(TUTORIAL_SCREEN_IMG_PATH);
 
-        // -------------------- TOP PANEL --------------------
-        // Title label
-        JLabel Title = new JLabel();
-        Title.setText("<html><span style='color:red;'>PEPPER</span><span style='color:green;'>.FY</span></html>");									// Change text color to red
-        Title.setFont(new Font("Arial", Font.BOLD, 35));
-        centralTopPanel.add(Title);
-
-        // Pepper.Fy icon
-        ImageIcon pepperfyIcon = new ImageIcon(SMALL_PEPPERFY_ICON_PATH);
-        JLabel pepperfyLabel = new JLabel(pepperfyIcon);
-        centralTopPanel.add(pepperfyLabel);
-        topPanel.add(centralTopPanel,BorderLayout.CENTER);
-
-        // Style backButton
-        ImageIcon back_icon = new ImageIcon(BACK_BUTTON_ICON_PATH);
-        JButton backButton = new JButton(back_icon);
-        backButton.setBackground(Color.WHITE);
-        backButton.setBorderPainted(false);
-        backButton.setToolTipText("Back");
-        backButton.setFocusPainted(false);
-
-        topPanel.add(backButton,BorderLayout.WEST);
-
-        // Action backButton
-        backButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                tutorialFrame.dispose();										// close options window
-                CurrentScreen.setCurrentScreen("menu");						// open menu screen
-            }
-        });
-
-        // -------------------- CENTRAL PANEL --------------------
         // Tutorial screen image
         gbcCentralPanel.gridx = 1;
         gbcCentralPanel.gridy = 1;
@@ -90,7 +49,6 @@ public class TutorialScreen {
         gbcCentralPanel.fill = GridBagConstraints.BOTH;
         gbcCentralPanel.insets = new Insets(70, 70, 70, 70);
         centralPanel.add(imagePanel,gbcCentralPanel);
-
 
         // Adding the created panels to the window
         tutorialFrame.add(topPanel,BorderLayout.NORTH);

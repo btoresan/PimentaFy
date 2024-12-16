@@ -6,9 +6,8 @@ import static javax.swing.text.StyleConstants.setBackground;
 
 public class TopPanel extends JPanel {
     private static final String SMALL_PEPPERFY_ICON_PATH = "images/small_pepperfy_icon.png";
-    private static final String BACK_BUTTON_ICON_PATH = "images/back_icon.png";
 
-    public TopPanel(JFrame convertFrame) {
+    public TopPanel(JFrame frame) {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -27,25 +26,11 @@ public class TopPanel extends JPanel {
         JLabel pepperfyLabel = new JLabel(pepperfyIcon);
         centralTopPanel.add(pepperfyLabel);
 
+        // Buttons
+        BackButton backButton = new BackButton(frame);
+
         add(centralTopPanel, BorderLayout.CENTER);
-
-        // Style backButton
-        ImageIcon backIcon = new ImageIcon(BACK_BUTTON_ICON_PATH);
-        JButton backButton = new JButton(backIcon);
-        backButton.setBackground(Color.WHITE);
-        backButton.setBorderPainted(false);
-        backButton.setToolTipText("Back");
-        backButton.setFocusPainted(false);
-
         add(backButton, BorderLayout.WEST);
 
-        // Action backButton
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                convertFrame.dispose();
-                CurrentScreen.setCurrentScreen("menu");
-            }
-        });
     }
 }
