@@ -10,8 +10,8 @@ public class TutorialScreen {
 
     static {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        WINDOW_WIDTH = screenSize.width;
-        WINDOW_HEIGHT = screenSize.height;
+        WINDOW_WIDTH = screenSize.width-100;
+        WINDOW_HEIGHT = screenSize.height-100;
     }
 
     public TutorialScreen() {

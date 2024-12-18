@@ -62,6 +62,7 @@ public class BottomPanel extends JPanel {
         sliderVolume.setMinorTickSpacing(5);
         sliderVolume.setPaintTicks(true);
         sliderVolume.setPaintLabels(true);
+        sliderVolume.setBackground(Color.WHITE);
         gbc.gridx = 3;
         gbc.gridy = 2;
         gbc.insets = new Insets(5, 5, 5, 40);
