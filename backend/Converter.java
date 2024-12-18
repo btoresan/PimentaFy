@@ -106,10 +106,12 @@ public class Converter {
                         sounds.add(getNextSound(currentOffsetIndex, currentOctave, 125, currentVolume, currentBPM, false));
                     break;
                 case "plus one octave":
-                    currentOctave++;
+                    if(currentOctave < 8)
+                        currentOctave++;
                     break;
                 case "minus one octave":
-                    currentOctave--;
+                    if(currentOctave > 1)
+                        currentOctave--;
                     break;
                 case "random note":
                     int randomFrequency = randomValue.nextInt(7);
@@ -117,6 +119,9 @@ public class Converter {
                     break;
                 case "plus one instrument":
                     currentInstrument++;
+
+                    if(currentInstrument == 128)
+                        currentInstrument = 0;
                     break;
                 case "faster notes":
                     currentBPM = currentBPM + 80;
