@@ -1,4 +1,3 @@
-package backend;
 import gui.CurrentScreen;
 
 public class Main {
